@@ -1,0 +1,1273 @@
+{
+  "paragraphs": [
+    {
+      "text": "val user_data \u003d sc.textFile(\"/Users/kaifeilei/Desktop/rutgers/course/semester_4/movie_recommend/ml-100k/u.user\")\nuser_data.first()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nuser_data: org.apache.spark.rdd.RDD[String] \u003d /Users/kaifeilei/Desktop/rutgers/course/semester_4/movie_recommend/ml-100k/u.user MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:27\n\nres0: String \u003d 1|24|M|technician|85711\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492819330986_-1775374192",
+      "id": "20170421-200210_2006140862",
+      "dateCreated": "Apr 21, 2017 8:02:10 PM",
+      "dateStarted": "May 2, 2017 5:07:21 PM",
+      "dateFinished": "May 2, 2017 5:07:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val user_fields \u003d user_data.map(line \u003d\u003e line.split(\"\\\\|\"))\nval num_users \u003d user_fields.map(fields \u003d\u003e fields(0)).count()\nval num_age \u003d user_fields.map(fields \u003d\u003e fields(1)).distinct().count()\nval num_genders \u003d user_fields.map(fields \u003d\u003e fields(2)).distinct().count()\nval num_occupations \u003d user_fields.map(fields \u003d\u003e fields(3)).distinct().count()\nval num_zipcodes \u003d user_fields.map(fields \u003d\u003e fields(4)).distinct().count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nuser_fields: org.apache.spark.rdd.RDD[Array[String]] \u003d MapPartitionsRDD[2] at map at \u003cconsole\u003e:29\n\nnum_users: Long \u003d 943\n\nnum_age: Long \u003d 61\n\nnum_genders: Long \u003d 2\n\nnum_occupations: Long \u003d 21\n\nnum_zipcodes: Long \u003d 795\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492819425041_-1504621524",
+      "id": "20170421-200345_2083956522",
+      "dateCreated": "Apr 21, 2017 8:03:45 PM",
+      "dateStarted": "May 2, 2017 5:07:23 PM",
+      "dateFinished": "May 2, 2017 5:07:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val age_table \u003d user_fields.map(fields \u003d\u003e (fields(1),1)).reduceByKey(_ + _).collect().map(line \u003d\u003e line._1+\"\\t\"+line._2).toList.mkString(\"\\n\")\nprintln(\"%table age\\tsize\\n\" + age_table)\n\n",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:59:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": true
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nage_table: String \u003d\n60\t9\n57\t9\n20\t32\n19\t23\n15\t6\n42\t21\n48\t20\n53\t12\n35\t27\n62\t2\n37\t19\n46\t12\n55\t11\n40\t21\n31\t25\n51\t20\n22\t37\n26\t34\n28\t36\n59\t3\n68\t2\n33\t26\n17\t14\n73\t1\n66\t1\n44\t23\n13\t5\n24\t33\n39\t22\n11\t1\n64\t2\n29\t32\n69\t2\n49\t19\n14\t3\n21\t27\n47\t14\n7\t1\n18\t18\n27\t35\n36\t21\n45\t15\n32\t28\n56\t6\n16\t5\n41\t10\n52\t6\n58\t3\n34\t17\n50\t20\n54\t4\n61\t3\n30\t39\n25\t38\n38\t17\n70\t3\n43\t13\n63\t3\n10\t1\n65\t3\n23\t28\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "age\tsize\n60\t9\n57\t9\n20\t32\n19\t23\n15\t6\n42\t21\n48\t20\n53\t12\n35\t27\n62\t2\n37\t19\n46\t12\n55\t11\n40\t21\n31\t25\n51\t20\n22\t37\n26\t34\n28\t36\n59\t3\n68\t2\n33\t26\n17\t14\n73\t1\n66\t1\n44\t23\n13\t5\n24\t33\n39\t22\n11\t1\n64\t2\n29\t32\n69\t2\n49\t19\n14\t3\n21\t27\n47\t14\n7\t1\n18\t18\n27\t35\n36\t21\n45\t15\n32\t28\n56\t6\n16\t5\n41\t10\n52\t6\n58\t3\n34\t17\n50\t20\n54\t4\n61\t3\n30\t39\n25\t38\n38\t17\n70\t3\n43\t13\n63\t3\n10\t1\n65\t3\n23\t28\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492819505745_497550455",
+      "id": "20170421-200505_382391104",
+      "dateCreated": "Apr 21, 2017 8:05:05 PM",
+      "dateStarted": "May 2, 2017 5:07:43 PM",
+      "dateFinished": "May 2, 2017 5:07:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val count_by_occupation \u003d user_fields.map(fields \u003d\u003e (fields(3),1)).reduceByKey(_ + _).collect().toList.sortBy(_._2).map(line \u003d\u003e line._1+\"\\t\"+line._2).toList.mkString(\"\\n\")\nprintln(\"%table occupation\\tsize\\n\" + count_by_occupation)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ncount_by_occupation: String \u003d\ndoctor\t7\nhomemaker\t7\nnone\t9\nlawyer\t12\nsalesman\t12\nretired\t14\nhealthcare\t16\nentertainment\t18\nmarketing\t26\ntechnician\t27\nartist\t28\nscientist\t31\nexecutive\t32\nwriter\t45\nlibrarian\t51\nprogrammer\t66\nengineer\t67\nadministrator\t79\neducator\t95\nother\t105\nstudent\t196\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "occupation\tsize\ndoctor\t7\nhomemaker\t7\nnone\t9\nlawyer\t12\nsalesman\t12\nretired\t14\nhealthcare\t16\nentertainment\t18\nmarketing\t26\ntechnician\t27\nartist\t28\nscientist\t31\nexecutive\t32\nwriter\t45\nlibrarian\t51\nprogrammer\t66\nengineer\t67\nadministrator\t79\neducator\t95\nother\t105\nstudent\t196\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492819545860_-257834229",
+      "id": "20170421-200545_928363271",
+      "dateCreated": "Apr 21, 2017 8:05:45 PM",
+      "dateStarted": "May 2, 2017 5:07:45 PM",
+      "dateFinished": "May 2, 2017 5:07:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val movie_data \u003d sc.textFile(\"/Users/kaifeilei/Desktop/rutgers/course/semester_4/movie_recommend/ml-100k/u.item\")\nmovie_data.first()\nval num_movies \u003d movie_data.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nmovie_data: org.apache.spark.rdd.RDD[String] \u003d /Users/kaifeilei/Desktop/rutgers/course/semester_4/movie_recommend/ml-100k/u.item MapPartitionsRDD[25] at textFile at \u003cconsole\u003e:27\n\nres3: String \u003d 1|Toy Story (1995)|01-Jan-1995||http://us.imdb.com/M/title-exact?Toy%20Story%20(1995)|0|0|0|1|1|1|0|0|0|0|0|0|0|0|0|0|0|0|0\n\nnum_movies: Long \u003d 1682\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492819698480_1807310687",
+      "id": "20170421-200818_826733740",
+      "dateCreated": "Apr 21, 2017 8:08:18 PM",
+      "dateStarted": "May 2, 2017 5:07:47 PM",
+      "dateFinished": "May 2, 2017 5:07:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def convert_year(date : String) : Int \u003d {\n    try\n        date.split(\"-\")(2).toInt\n    catch{\n        case e : Exception \u003d\u003e 1900\n    }\n}",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nconvert_year: (date: String)Int\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492819824294_-107783803",
+      "id": "20170421-201024_1721394090",
+      "dateCreated": "Apr 21, 2017 8:10:24 PM",
+      "dateStarted": "May 2, 2017 5:07:48 PM",
+      "dateFinished": "May 2, 2017 5:07:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val movie_years \u003d movie_data.map(line \u003d\u003e line.split(\"\\\\|\")).map(fields \u003d\u003e fields(2)).map(date \u003d\u003e convert_year(date)).filter(year \u003d\u003e year !\u003d 1900)\nval movie_ages \u003d movie_years.map(year \u003d\u003e 1998 - year).countByValue().map(line \u003d\u003e line._1+\"\\t\"+line._2).toList.mkString(\"\\n\")\nprintln(\"%table age\\tsize\\n\" + movie_ages)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nmovie_years: org.apache.spark.rdd.RDD[Int] \u003d MapPartitionsRDD[29] at filter at \u003cconsole\u003e:31\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmovie_ages: String \u003d\n0\t65\n5\t126\n10\t11\n56\t2\n42\t4\n24\t8\n37\t3\n25\t4\n52\t5\n14\t8\n20\t4\n46\t3\n57\t5\n29\t4\n61\t4\n1\t286\n6\t37\n60\t3\n28\t3\n38\t5\n21\t4\n33\t5\n65\t2\n9\t15\n53\t4\n13\t7\n41\t8\n2\t355\n32\t2\n34\t2\n45\t2\n64\t4\n17\t12\n22\t5\n44\t7\n59\t7\n27\t7\n12\t15\n54\t5\n49\t4\n76\t1\n7\t22\n39\t4\n66\t1\n3\t219\n35\t6\n48\t7\n63\t4\n18\t8\n50\t3\n67\t1\n16\t13\n31\t5\n11\t13\n72\t1\n43\t5\n40\t9\n26\t3\n55\t4\n23\t6\n8\t24\n58\t8\n36\t5\n30\t6\n51\t5\n19\t9\n4\t214\n47\t5\n15\t5\n68\t1\n62\t2\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "age\tsize\n0\t65\n5\t126\n10\t11\n56\t2\n42\t4\n24\t8\n37\t3\n25\t4\n52\t5\n14\t8\n20\t4\n46\t3\n57\t5\n29\t4\n61\t4\n1\t286\n6\t37\n60\t3\n28\t3\n38\t5\n21\t4\n33\t5\n65\t2\n9\t15\n53\t4\n13\t7\n41\t8\n2\t355\n32\t2\n34\t2\n45\t2\n64\t4\n17\t12\n22\t5\n44\t7\n59\t7\n27\t7\n12\t15\n54\t5\n49\t4\n76\t1\n7\t22\n39\t4\n66\t1\n3\t219\n35\t6\n48\t7\n63\t4\n18\t8\n50\t3\n67\t1\n16\t13\n31\t5\n11\t13\n72\t1\n43\t5\n40\t9\n26\t3\n55\t4\n23\t6\n8\t24\n58\t8\n36\t5\n30\t6\n51\t5\n19\t9\n4\t214\n47\t5\n15\t5\n68\t1\n62\t2\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492820227874_-1230822864",
+      "id": "20170421-201707_265743173",
+      "dateCreated": "Apr 21, 2017 8:17:07 PM",
+      "dateStarted": "May 2, 2017 5:07:48 PM",
+      "dateFinished": "May 2, 2017 5:07:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val rating_data_raw \u003d sc.textFile(\"/Users/kaifeilei/Desktop/rutgers/course/semester_4/movie_recommend/ml-100k/u.data\")\nrating_data_raw.first()\nval num_ratings \u003d rating_data_raw.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nrating_data_raw: org.apache.spark.rdd.RDD[String] \u003d /Users/kaifeilei/Desktop/rutgers/course/semester_4/movie_recommend/ml-100k/u.data MapPartitionsRDD[35] at textFile at \u003cconsole\u003e:27\n\nres5: String \u003d 196\t242\t3\t881250949\n\nnum_ratings: Long \u003d 100000\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492820284995_1254947834",
+      "id": "20170421-201804_1481718032",
+      "dateCreated": "Apr 21, 2017 8:18:04 PM",
+      "dateStarted": "May 2, 2017 5:07:48 PM",
+      "dateFinished": "May 2, 2017 5:07:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val rating_data \u003d rating_data_raw.map(line \u003d\u003e line.split(\"\\t\"))\nval ratings  \u003d rating_data.map(fields \u003d\u003e fields(2).toInt)\nval max_rating \u003d ratings.reduce((x,y) \u003d\u003e Math.max(x,y))\nval min_rating \u003d ratings.reduce((x,y) \u003d\u003e Math.min(x,y))\nval mean_rating \u003d ratings.reduce(_ + _) / num_ratings.toDouble \nval median_rating \u003d ratings.collect().toList.sorted.drop(num_ratings.toInt/2).head\nval ratings_per_user \u003d num_ratings / num_users\nval ratings_per_movie \u003d num_ratings / num_movies",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nrating_data: org.apache.spark.rdd.RDD[Array[String]] \u003d MapPartitionsRDD[36] at map at \u003cconsole\u003e:29\n\nratings: org.apache.spark.rdd.RDD[Int] \u003d MapPartitionsRDD[37] at map at \u003cconsole\u003e:31\n\nmax_rating: Int \u003d 5\n\nmin_rating: Int \u003d 1\n\nmean_rating: Double \u003d 3.52986\n\nmedian_rating: Int \u003d 4\n\nratings_per_user: Long \u003d 106\n\nratings_per_movie: Long \u003d 59\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492820469123_1679770272",
+      "id": "20170421-202109_1889398663",
+      "dateCreated": "Apr 21, 2017 8:21:09 PM",
+      "dateStarted": "May 2, 2017 5:07:50 PM",
+      "dateFinished": "May 2, 2017 5:07:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val count_by_rating \u003d ratings.countByValue().map(line \u003d\u003e line._1+\"\\t\"+line._2).toList.mkString(\"\\n\")\nprintln(\"%table rating\\tcount\\n\" + count_by_rating)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:23:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\n\n\n\n\n\ncount_by_rating: String \u003d\n5\t21201\n1\t6110\n2\t11370\n3\t27145\n4\t34174\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "rating\tcount\n5\t21201\n1\t6110\n2\t11370\n3\t27145\n4\t34174\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492820622613_879708743",
+      "id": "20170421-202342_1355499637",
+      "dateCreated": "Apr 21, 2017 8:23:42 PM",
+      "dateStarted": "May 2, 2017 5:07:50 PM",
+      "dateFinished": "May 2, 2017 5:07:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1493760238369_-1782197653",
+      "id": "20170502-172358_543174683",
+      "dateCreated": "May 2, 2017 5:23:58 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val user_ratings_by_user \u003d rating_data.map(fields \u003d\u003e (fields(0).toInt,fields(1).toInt)).groupByKey().map(x \u003d\u003e (x._1,x._2.size))\nval user_rating_table \u003d user_ratings_by_user.collect().map(line \u003d\u003e line._1+\"\\t\"+line._2).toList.mkString(\"\\n\")\nprintln(\"%table user\\tcount\\n\" + user_rating_table)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nuser_ratings_by_user: org.apache.spark.rdd.RDD[(Int, Int)] \u003d MapPartitionsRDD[43] at map at \u003cconsole\u003e:31\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nuser_rating_table: String \u003d\n778\t65\n386\t23\n454\t236\n772\t33\n324\t66\n180\t63\n320\t154\n752\t73\n408\t27\n586\t166\n428\t55\n464\t53\n346\t193\n14\t98\n466\t101\n24\t68\n520\t23\n912\t53\n302\t21\n146\t29\n140\t21\n204\t42\n514\t194\n390\t31\n226\t50\n934\t174\n318\t174\n12\t51\n576\t36\n810\t26\n228\t21\n712\t162\n628\t27\n94\t400\n452\t206\n192\t35\n450\t540\n160\t120\n492\t55\n512\t21\n420\t36\n366\t33\n22\t128\n460\t68\n350\t50\n548\t155\n646\t38\n808\t23\n758\t357\n842\t27\n528\t53\n696\t29\n626\t32\n40\t35\n558\t20\n434\t44\n58\t154\n136\t35\n590\t48\n878\t134\n196\t39\n636\t20\n96\t56\n338\t75\n784\t39\n524\t306\n848\t150\n698\t127\n918\t103\n216\t131\n292\t124\n98\t27\n884\t43\n30\t43\n246\t195\n754\t34\n92\t388\n814\t35\n266\t23\n344\t190\n834\t54\n664\t166\n252\t21\n72\t137\n688\t24\n736\t24\n78\t21\n144\t206\n652\t22\n494\t47\n506\t242\n854\t217\n84\t68\n122\t61\n592\t360\n404\t44\n782\t232\n76\t82\n470\t57\n326\t187\n836\t50\n310\t21\n430\t65\n740\t20\n774\t224\n208\t33\n436\t14...%table user\tcount\n778\t65\n386\t23\n454\t236\n772\t33\n324\t66\n180\t63\n320\t154\n752\t73\n408\t27\n586\t166\n428\t55\n464\t53\n346\t193\n14\t98\n466\t101\n24\t68\n520\t23\n912\t53\n302\t21\n146\t29\n140\t21\n204\t42\n514\t194\n390\t31\n226\t50\n934\t174\n318\t174\n12\t51\n576\t36\n810\t26\n228\t21\n712\t162\n628\t27\n94\t400\n452\t206\n192\t35\n450\t540\n160\t120\n492\t55\n512\t21\n420\t36\n366\t33\n22\t128\n460\t68\n350\t50\n548\t155\n646\t38\n808\t23\n758\t357\n842\t27\n528\t53\n696\t29\n626\t32\n40\t35\n558\t20\n434\t44\n58\t154\n136\t35\n590\t48\n878\t134\n196\t39\n636\t20\n96\t56\n338\t75\n784\t39\n524\t306\n848\t150\n698\t127\n918\t103\n216\t131\n292\t124\n98\t27\n884\t43\n30\t43\n246\t195\n754\t34\n92\t388\n814\t35\n266\t23\n344\t190\n834\t54\n664\t166\n252\t21\n72\t137\n688\t24\n736\t24\n78\t21\n144\t206\n652\t22\n494\t47\n506\t242\n854\t217\n84\t68\n122\t61\n592\t360\n404\t44\n782\t232\n76\t82\n470\t57\n326\t187\n836\t50\n310\t21\n430\t65\n740\t20\n774\t224\n208\t33\n436\t145\n902\t49\n124\t24\n164\t63\n794\t39\n438\t33\n804\t332\n8\t59\n174\t177\n372\t66\n734\t64\n536\t163\n786\t117\n602\t29\n34\t20\n820\t21\n4\t24\n474\t327\n150\t32\n600\t89\n892\t226\n650\t311\n672\t29\n682\t399\n910\t60\n152\t106\n368\t45\n796\t358\n798\t239\n236\t124\n74\t39\n316\t75\n730\t38\n402\t68\n406\t342\n400\t22\n612\t27\n888\t20\n256\t207\n462\t33\n874\t34\n588\t225\n764\t109\n334\t333\n162\t42\n224\t141\n726\t24\n120\t26\n616\t43\n890\t119\n166\t20\n46\t27\n608\t163\n606\t236\n572\t20\n172\t27\n916\t317\n678\t28\n284\t47\n190\t59\n304\t26\n674\t41\n378\t375\n496\t129\n662\t23\n498\t149\n114\t48\n306\t32\n914\t23\n516\t21\n282\t22\n176\t63\n26\t107\n360\t102\n830\t106\n312\t223\n840\t197\n52\t56\n872\t71\n936\t142\n298\t127\n16\t140\n158\t173\n156\t37\n750\t33\n54\t65\n702\t31\n286\t288\n456\t217\n376\t30\n294\t150\n686\t71\n928\t32\n64\t200\n188\t112\n770\t64\n720\t30\n362\t25\n132\t22\n634\t135\n380\t162\n862\t165\n290\t150\n70\t131\n432\t62\n364\t20\n508\t87\n640\t109\n500\t225\n660\t224\n10\t184\n714\t44\n818\t21\n562\t72\n694\t157\n280\t258\n922\t127\n232\t93\n116\t143\n240\t24\n260\t24\n490\t57\n446\t36\n844\t81\n42\t183\n102\t216\n258\t23\n314\t245\n900\t45\n542\t135\n598\t25\n488\t154\n826\t115\n484\t139\n550\t40\n534\t80\n234\t480\n656\t24\n348\t58\n356\t24\n692\t40\n574\t46\n762\t21\n340\t44\n930\t63\n130\t353\n744\t27\n582\t62\n66\t38\n906\t41\n860\t71\n138\t51\n904\t47\n170\t22\n480\t60\n518\t73\n530\t45\n732\t20\n828\t104\n926\t20\n624\t141\n212\t25\n288\t75\n38\t121\n728\t26\n330\t147\n100\t59\n482\t26\n644\t42\n332\t183\n112\t46\n676\t77\n184\t251\n300\t20\n632\t118\n742\t26\n544\t31\n850\t51\n194\t305\n812\t20\n886\t240\n532\t274\n126\t45\n118\t71\n186\t92\n832\t25\n846\t405\n858\t21\n198\t181\n658\t71\n738\t148\n168\t69\n722\t42\n898\t30\n388\t52\n254\t159\n296\t147\n630\t108\n556\t44\n822\t25\n82\t168\n476\t83\n28\t79\n766\t175\n866\t20\n222\t387\n894\t245\n354\t233\n110\t133\n336\t130\n214\t128\n472\t263\n654\t147\n106\t64\n322\t51\n414\t25\n896\t362\n546\t59\n248\t56\n852\t49\n218\t53\n274\t71\n942\t79\n178\t273\n824\t20\n760\t41\n56\t187\n920\t26\n704\t90\n566\t149\n756\t109\n708\t105\n182\t28\n394\t149\n32\t41\n882\t137\n206\t64\n382\t53\n768\t64\n44\t151\n88\t21\n618\t216\n244\t238\n684\t86\n670\t46\n806\t140\n440\t51\n876\t21\n526\t68\n502\t37\n412\t51\n134\t25\n856\t26\n622\t228\n80\t29\n838\t93\n104\t111\n352\t42\n510\t30\n458\t183\n272\t51\n396\t54\n270\t138\n202\t20\n278\t23\n418\t20\n90\t300\n868\t208\n238\t29\n20\t48\n18\t277\n342\t201\n552\t84\n268\t328\n864\t294\n816\t25\n718\t39\n668\t46\n568\t81\n504\t251\n614\t39\n424\t44\n666\t245\n200\t216\n370\t75\n578\t24\n142\t33\n584\t24\n908\t74\n538\t81\n220\t22\n62\t232\n790\t231\n250\t122\n594\t25\n264\t120\n442\t143\n444\t24\n710\t86\n6\t211\n690\t115\n620\t110\n780\t55\n86\t23\n60\t208\n308\t397\n328\t283\n2\t62\n398\t172\n570\t22\n706\t29\n230\t133\n554\t114\n800\t28\n802\t75\n638\t67\n648\t297\n610\t75\n792\t47\n50\t24\n262\t160\n36\t20\n426\t101\n748\t108\n416\t493\n358\t43\n154\t51\n746\t67\n924\t82\n242\t20\n938\t108\n716\t269\n680\t38\n422\t97\n596\t20\n108\t33\n788\t249\n148\t65\n540\t63\n564\t34\n870\t269\n940\t107\n486\t189\n724\t85\n410\t28\n276\t518\n374\t274\n48\t66\n128\t184\n560\t101\n210\t132\n700\t21\n642\t318\n468\t143\n448\t38\n392\t111\n604\t27\n880\t368\n478\t113\n776\t105\n580\t47\n932\t241\n384\t22\n68\t34\n522\t30\n451\t98\n893\t59\n147\t20\n373\t233\n369\t22\n667\t47\n795\t159\n307\t112\n11\t181\n303\t484\n201\t386\n291\t296\n1\t272\n215\t93\n623\t45\n195\t96\n17\t28\n443\t24\n535\t218\n861\t43\n605\t90\n755\t38\n447\t139\n703\t47\n659\t191\n931\t61\n781\t42\n21\t179\n321\t125\n331\t70\n715\t167\n367\t58\n77\t72\n403\t50\n719\t67\n355\t26\n283\t53\n429\t414\n801\t26\n131\t30\n577\t188\n347\t199\n255\t83\n775\t28\n799\t24\n637\t104\n815\t183\n293\t388\n93\t20\n489\t109\n621\t171\n851\t209\n515\t40\n731\t83\n453\t156\n787\t57\n599\t47\n547\t23\n855\t23\n701\t33\n363\t311\n929\t49\n381\t127\n645\t122\n81\t58\n387\t304\n419\t32\n345\t232\n711\t221\n649\t24\n375\t28\n79\t55\n885\t102\n263\t123\n835\t102\n427\t31\n127\t23\n603\t47\n275\t95\n541\t133\n741\t104\n505\t112\n581\t28\n827\t28\n83\t155\n771\t70\n919\t217\n251\t77\n9\t22\n651\t21\n735\t53\n849\t23\n423\t64\n915\t26\n467\t44\n187\t56\n553\t100\n397\t102\n631\t20\n831\t73\n243\t81\n95\t278\n329\t65\n847\t146\n379\t196\n351\t44\n589\t43\n863\t107\n73\t66\n469\t43\n665\t142\n507\t58\n501\t73\n181\t435\n571\t20\n869\t47\n237\t48\n259\t46\n759\t32\n143\t20\n595\t96\n579\t74\n7\t403\n389\t271\n675\t34\n819\t28\n499\t102\n695\t38\n439\t31\n267\t185\n491\t33\n327\t284\n907\t147\n193\t121\n265\t46\n417\t365\n513\t22\n707\t236\n437\t263\n937\t40\n359\t27\n685\t20\n111\t24\n527\t137\n415\t24\n683\t75\n449\t75\n791\t25\n279\t434\n89\t76\n241\t23\n597\t41\n103\t29\n481\t56\n773\t161\n269\t323\n483\t59\n99\t136\n905\t40\n277\t54\n643\t206\n53\t28\n737\t33\n333\t26\n343\t237\n613\t28\n845\t31\n601\t148\n393\t448\n943\t168\n33\t24\n561\t357\n23\t151\n763\t129\n705\t114\n797\t26\n69\t65\n3\t54\n135\t55\n935\t39\n123\t54\n91\t98\n785\t27\n271\t278\n197\t118\n239\t159\n177\t115\n119\t181\n189\t187\n511\t24\n867\t95\n757\t166\n477\t35\n557\t53\n875\t89\n883\t268\n121\t74\n653\t283\n925\t32\n727\t322\n531\t30\n923\t74\n51\t23\n219\t28\n563\t30\n567\t155\n285\t32\n385\t281\n305\t222\n421\t62\n911\t98\n173\t43\n569\t70\n273\t22\n629\t121\n523\t100\n671\t124\n689\t36\n821\t62\n843\t204\n43\t221\n555\t52\n159\t107\n663\t158\n301\t275\n857\t22\n587\t98\n921\t110\n839\t57\n899\t135\n117\t86\n829\t64\n27\t25\n895\t20\n245\t22\n559\t76\n249\t161\n295\t196\n257\t57\n335\t22\n163\t23\n361\t121\n749\t305\n573\t51\n357\t76\n487\t231\n209\t33\n517\t37\n433\t41\n129\t30\n733\t107\n19\t20\n39\t22\n609\t28\n881\t259\n751\t168\n297\t192\n769\t29\n71\t38\n723\t22\n641\t40\n529\t43\n635\t34\n171\t28\n729\t21\n311\t294\n473\t35\n933\t184\n235\t94\n399\t319\n909\t26\n37\t57\n185\t48\n679\t62\n247\t26\n63\t93\n543\t197\n203\t43\n309\t20\n211\t37\n859\t39\n299\t280\n217\t76\n539\t56\n139\t24\n509\t33\n721\t168\n533\t260\n697\t105\n681\t22\n59\t382\n411\t58\n677\t49\n113\t51\n565\t35\n897\t185\n165\t30\n809\t20\n525\t54\n31\t36\n841\t31\n413\t50\n137\t47\n661\t121\n229\t30\n783\t30\n231\t21\n647\t58\n29\t34\n633\t58\n551\t334\n191\t27\n161\t58\n761\t66\n591\t84\n57\t106\n149\t36\n655\t685\n793\t55\n313\t262\n463\t133\n49\t215\n435\t379\n693\t154\n109\t234\n167\t69\n519\t49\n115\t92\n337\t34\n15\t104\n441\t20\n699\t149\n717\t93\n401\t153\n779\t37\n903\t136\n585\t80\n371\t51\n823\t185\n891\t47\n227\t58\n889\t326\n479\t202\n317\t22\n813\t29\n221\t146\n141\t107\n223\t105\n461\t23\n879\t29\n745\t60\n575\t26\n805\t273\n457\t277\n615\t103\n669\t100\n917\t35\n817\t36\n151\t307\n101\t67\n593\t156\n153\t23\n807\t204\n767\t37\n319\t23\n289\t27\n353\t25\n105\t23\n125\t182\n157\t51\n65\t80\n35\t25\n383\t71\n639\t148\n625\t106\n611\t42\n865\t66\n175\t38\n459\t118\n497\t279\n743\t35\n941\t22\n495\t213\n341\t21\n887\t171\n725\t25\n339\t254\n913\t132\n199\t40\n145\t316\n657\t29\n583\t27\n41\t52\n409\t203\n673\t35\n253\t97\n713\t30\n837\t46\n709\t138\n261\t27\n169\t37\n395\t57\n25\t78\n545\t162\n617\t108\n213\t126\n471\t31\n503\t160\n627\t181\n833\t267\n877\t81\n825\t145\n67\t30\n811\t21\n425\t204\n85\t288\n405\t737\n789\t33\n871\t115\n431\t21\n391\t121\n87\t211\n287\t62\n5\t175\n225\t27\n13\t636\n455\t189\n475\t20\n619\t89\n325\t142\n465\t80\n323\t89\n407\t226\n55\t21\n927\t120\n691\t32\n107\t22\n349\t41\n765\t23\n607\t37\n179\t42\n549\t25\n939\t49\n75\t79\n901\t124\n133\t26\n205\t22\n445\t135\n45\t48\n873\t20\n183\t53\n853\t41\n61\t21\n687\t21\n47\t25\n747\t293\n485\t26\n97\t63\n281\t26\n753\t57\n207\t230\n803\t33\n521\t150\n739\t35\n233\t110\n537\t490\n777\t36\n377\t33\n493\t135\n365\t58\n155\t22\n315\t87\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492820674696_-2056802132",
+      "id": "20170421-202434_1381100897",
+      "dateCreated": "Apr 21, 2017 8:24:34 PM",
+      "dateStarted": "May 2, 2017 5:07:52 PM",
+      "dateFinished": "May 2, 2017 5:07:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "println(\"%table user\\tcount\\n\" + user_rating_table)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 6:24:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "stackedAreaChart",
+              "height": 300.0,
+              "optionOpen": true,
+              "setting": {
+                "stackedAreaChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "user",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "user",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "count",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "user\tcount\n778\t65\n386\t23\n454\t236\n772\t33\n324\t66\n180\t63\n320\t154\n752\t73\n408\t27\n586\t166\n428\t55\n464\t53\n346\t193\n14\t98\n466\t101\n24\t68\n520\t23\n912\t53\n302\t21\n146\t29\n140\t21\n204\t42\n514\t194\n390\t31\n226\t50\n934\t174\n318\t174\n12\t51\n576\t36\n810\t26\n228\t21\n712\t162\n628\t27\n94\t400\n452\t206\n192\t35\n450\t540\n160\t120\n492\t55\n512\t21\n420\t36\n366\t33\n22\t128\n460\t68\n350\t50\n548\t155\n646\t38\n808\t23\n758\t357\n842\t27\n528\t53\n696\t29\n626\t32\n40\t35\n558\t20\n434\t44\n58\t154\n136\t35\n590\t48\n878\t134\n196\t39\n636\t20\n96\t56\n338\t75\n784\t39\n524\t306\n848\t150\n698\t127\n918\t103\n216\t131\n292\t124\n98\t27\n884\t43\n30\t43\n246\t195\n754\t34\n92\t388\n814\t35\n266\t23\n344\t190\n834\t54\n664\t166\n252\t21\n72\t137\n688\t24\n736\t24\n78\t21\n144\t206\n652\t22\n494\t47\n506\t242\n854\t217\n84\t68\n122\t61\n592\t360\n404\t44\n782\t232\n76\t82\n470\t57\n326\t187\n836\t50\n310\t21\n430\t65\n740\t20\n774\t224\n208\t33\n436\t145\n902\t49\n124\t24\n164\t63\n794\t39\n438\t33\n804\t332\n8\t59\n174\t177\n372\t66\n734\t64\n536\t163\n786\t117\n602\t29\n34\t20\n820\t21\n4\t24\n474\t327\n150\t32\n600\t89\n892\t226\n650\t311\n672\t29\n682\t399\n910\t60\n152\t106\n368\t45\n796\t358\n798\t239\n236\t124\n74\t39\n316\t75\n730\t38\n402\t68\n406\t342\n400\t22\n612\t27\n888\t20\n256\t207\n462\t33\n874\t34\n588\t225\n764\t109\n334\t333\n162\t42\n224\t141\n726\t24\n120\t26\n616\t43\n890\t119\n166\t20\n46\t27\n608\t163\n606\t236\n572\t20\n172\t27\n916\t317\n678\t28\n284\t47\n190\t59\n304\t26\n674\t41\n378\t375\n496\t129\n662\t23\n498\t149\n114\t48\n306\t32\n914\t23\n516\t21\n282\t22\n176\t63\n26\t107\n360\t102\n830\t106\n312\t223\n840\t197\n52\t56\n872\t71\n936\t142\n298\t127\n16\t140\n158\t173\n156\t37\n750\t33\n54\t65\n702\t31\n286\t288\n456\t217\n376\t30\n294\t150\n686\t71\n928\t32\n64\t200\n188\t112\n770\t64\n720\t30\n362\t25\n132\t22\n634\t135\n380\t162\n862\t165\n290\t150\n70\t131\n432\t62\n364\t20\n508\t87\n640\t109\n500\t225\n660\t224\n10\t184\n714\t44\n818\t21\n562\t72\n694\t157\n280\t258\n922\t127\n232\t93\n116\t143\n240\t24\n260\t24\n490\t57\n446\t36\n844\t81\n42\t183\n102\t216\n258\t23\n314\t245\n900\t45\n542\t135\n598\t25\n488\t154\n826\t115\n484\t139\n550\t40\n534\t80\n234\t480\n656\t24\n348\t58\n356\t24\n692\t40\n574\t46\n762\t21\n340\t44\n930\t63\n130\t353\n744\t27\n582\t62\n66\t38\n906\t41\n860\t71\n138\t51\n904\t47\n170\t22\n480\t60\n518\t73\n530\t45\n732\t20\n828\t104\n926\t20\n624\t141\n212\t25\n288\t75\n38\t121\n728\t26\n330\t147\n100\t59\n482\t26\n644\t42\n332\t183\n112\t46\n676\t77\n184\t251\n300\t20\n632\t118\n742\t26\n544\t31\n850\t51\n194\t305\n812\t20\n886\t240\n532\t274\n126\t45\n118\t71\n186\t92\n832\t25\n846\t405\n858\t21\n198\t181\n658\t71\n738\t148\n168\t69\n722\t42\n898\t30\n388\t52\n254\t159\n296\t147\n630\t108\n556\t44\n822\t25\n82\t168\n476\t83\n28\t79\n766\t175\n866\t20\n222\t387\n894\t245\n354\t233\n110\t133\n336\t130\n214\t128\n472\t263\n654\t147\n106\t64\n322\t51\n414\t25\n896\t362\n546\t59\n248\t56\n852\t49\n218\t53\n274\t71\n942\t79\n178\t273\n824\t20\n760\t41\n56\t187\n920\t26\n704\t90\n566\t149\n756\t109\n708\t105\n182\t28\n394\t149\n32\t41\n882\t137\n206\t64\n382\t53\n768\t64\n44\t151\n88\t21\n618\t216\n244\t238\n684\t86\n670\t46\n806\t140\n440\t51\n876\t21\n526\t68\n502\t37\n412\t51\n134\t25\n856\t26\n622\t228\n80\t29\n838\t93\n104\t111\n352\t42\n510\t30\n458\t183\n272\t51\n396\t54\n270\t138\n202\t20\n278\t23\n418\t20\n90\t300\n868\t208\n238\t29\n20\t48\n18\t277\n342\t201\n552\t84\n268\t328\n864\t294\n816\t25\n718\t39\n668\t46\n568\t81\n504\t251\n614\t39\n424\t44\n666\t245\n200\t216\n370\t75\n578\t24\n142\t33\n584\t24\n908\t74\n538\t81\n220\t22\n62\t232\n790\t231\n250\t122\n594\t25\n264\t120\n442\t143\n444\t24\n710\t86\n6\t211\n690\t115\n620\t110\n780\t55\n86\t23\n60\t208\n308\t397\n328\t283\n2\t62\n398\t172\n570\t22\n706\t29\n230\t133\n554\t114\n800\t28\n802\t75\n638\t67\n648\t297\n610\t75\n792\t47\n50\t24\n262\t160\n36\t20\n426\t101\n748\t108\n416\t493\n358\t43\n154\t51\n746\t67\n924\t82\n242\t20\n938\t108\n716\t269\n680\t38\n422\t97\n596\t20\n108\t33\n788\t249\n148\t65\n540\t63\n564\t34\n870\t269\n940\t107\n486\t189\n724\t85\n410\t28\n276\t518\n374\t274\n48\t66\n128\t184\n560\t101\n210\t132\n700\t21\n642\t318\n468\t143\n448\t38\n392\t111\n604\t27\n880\t368\n478\t113\n776\t105\n580\t47\n932\t241\n384\t22\n68\t34\n522\t30\n451\t98\n893\t59\n147\t20\n373\t233\n369\t22\n667\t47\n795\t159\n307\t112\n11\t181\n303\t484\n201\t386\n291\t296\n1\t272\n215\t93\n623\t45\n195\t96\n17\t28\n443\t24\n535\t218\n861\t43\n605\t90\n755\t38\n447\t139\n703\t47\n659\t191\n931\t61\n781\t42\n21\t179\n321\t125\n331\t70\n715\t167\n367\t58\n77\t72\n403\t50\n719\t67\n355\t26\n283\t53\n429\t414\n801\t26\n131\t30\n577\t188\n347\t199\n255\t83\n775\t28\n799\t24\n637\t104\n815\t183\n293\t388\n93\t20\n489\t109\n621\t171\n851\t209\n515\t40\n731\t83\n453\t156\n787\t57\n599\t47\n547\t23\n855\t23\n701\t33\n363\t311\n929\t49\n381\t127\n645\t122\n81\t58\n387\t304\n419\t32\n345\t232\n711\t221\n649\t24\n375\t28\n79\t55\n885\t102\n263\t123\n835\t102\n427\t31\n127\t23\n603\t47\n275\t95\n541\t133\n741\t104\n505\t112\n581\t28\n827\t28\n83\t155\n771\t70\n919\t217\n251\t77\n9\t22\n651\t21\n735\t53\n849\t23\n423\t64\n915\t26\n467\t44\n187\t56\n553\t100\n397\t102\n631\t20\n831\t73\n243\t81\n95\t278\n329\t65\n847\t146\n379\t196\n351\t44\n589\t43\n863\t107\n73\t66\n469\t43\n665\t142\n507\t58\n501\t73\n181\t435\n571\t20\n869\t47\n237\t48\n259\t46\n759\t32\n143\t20\n595\t96\n579\t74\n7\t403\n389\t271\n675\t34\n819\t28\n499\t102\n695\t38\n439\t31\n267\t185\n491\t33\n327\t284\n907\t147\n193\t121\n265\t46\n417\t365\n513\t22\n707\t236\n437\t263\n937\t40\n359\t27\n685\t20\n111\t24\n527\t137\n415\t24\n683\t75\n449\t75\n791\t25\n279\t434\n89\t76\n241\t23\n597\t41\n103\t29\n481\t56\n773\t161\n269\t323\n483\t59\n99\t136\n905\t40\n277\t54\n643\t206\n53\t28\n737\t33\n333\t26\n343\t237\n613\t28\n845\t31\n601\t148\n393\t448\n943\t168\n33\t24\n561\t357\n23\t151\n763\t129\n705\t114\n797\t26\n69\t65\n3\t54\n135\t55\n935\t39\n123\t54\n91\t98\n785\t27\n271\t278\n197\t118\n239\t159\n177\t115\n119\t181\n189\t187\n511\t24\n867\t95\n757\t166\n477\t35\n557\t53\n875\t89\n883\t268\n121\t74\n653\t283\n925\t32\n727\t322\n531\t30\n923\t74\n51\t23\n219\t28\n563\t30\n567\t155\n285\t32\n385\t281\n305\t222\n421\t62\n911\t98\n173\t43\n569\t70\n273\t22\n629\t121\n523\t100\n671\t124\n689\t36\n821\t62\n843\t204\n43\t221\n555\t52\n159\t107\n663\t158\n301\t275\n857\t22\n587\t98\n921\t110\n839\t57\n899\t135\n117\t86\n829\t64\n27\t25\n895\t20\n245\t22\n559\t76\n249\t161\n295\t196\n257\t57\n335\t22\n163\t23\n361\t121\n749\t305\n573\t51\n357\t76\n487\t231\n209\t33\n517\t37\n433\t41\n129\t30\n733\t107\n19\t20\n39\t22\n609\t28\n881\t259\n751\t168\n297\t192\n769\t29\n71\t38\n723\t22\n641\t40\n529\t43\n635\t34\n171\t28\n729\t21\n311\t294\n473\t35\n933\t184\n235\t94\n399\t319\n909\t26\n37\t57\n185\t48\n679\t62\n247\t26\n63\t93\n543\t197\n203\t43\n309\t20\n211\t37\n859\t39\n299\t280\n217\t76\n539\t56\n139\t24\n509\t33\n721\t168\n533\t260\n697\t105\n681\t22\n59\t382\n411\t58\n677\t49\n113\t51\n565\t35\n897\t185\n165\t30\n809\t20\n525\t54\n31\t36\n841\t31\n413\t50\n137\t47\n661\t121\n229\t30\n783\t30\n231\t21\n647\t58\n29\t34\n633\t58\n551\t334\n191\t27\n161\t58\n761\t66\n591\t84\n57\t106\n149\t36\n655\t685\n793\t55\n313\t262\n463\t133\n49\t215\n435\t379\n693\t154\n109\t234\n167\t69\n519\t49\n115\t92\n337\t34\n15\t104\n441\t20\n699\t149\n717\t93\n401\t153\n779\t37\n903\t136\n585\t80\n371\t51\n823\t185\n891\t47\n227\t58\n889\t326\n479\t202\n317\t22\n813\t29\n221\t146\n141\t107\n223\t105\n461\t23\n879\t29\n745\t60\n575\t26\n805\t273\n457\t277\n615\t103\n669\t100\n917\t35\n817\t36\n151\t307\n101\t67\n593\t156\n153\t23\n807\t204\n767\t37\n319\t23\n289\t27\n353\t25\n105\t23\n125\t182\n157\t51\n65\t80\n35\t25\n383\t71\n639\t148\n625\t106\n611\t42\n865\t66\n175\t38\n459\t118\n497\t279\n743\t35\n941\t22\n495\t213\n341\t21\n887\t171\n725\t25\n339\t254\n913\t132\n199\t40\n145\t316\n657\t29\n583\t27\n41\t52\n409\t203\n673\t35\n253\t97\n713\t30\n837\t46\n709\t138\n261\t27\n169\t37\n395\t57\n25\t78\n545\t162\n617\t108\n213\t126\n471\t31\n503\t160\n627\t181\n833\t267\n877\t81\n825\t145\n67\t30\n811\t21\n425\t204\n85\t288\n405\t737\n789\t33\n871\t115\n431\t21\n391\t121\n87\t211\n287\t62\n5\t175\n225\t27\n13\t636\n455\t189\n475\t20\n619\t89\n325\t142\n465\t80\n323\t89\n407\t226\n55\t21\n927\t120\n691\t32\n107\t22\n349\t41\n765\t23\n607\t37\n179\t42\n549\t25\n939\t49\n75\t79\n901\t124\n133\t26\n205\t22\n445\t135\n45\t48\n873\t20\n183\t53\n853\t41\n61\t21\n687\t21\n47\t25\n747\t293\n485\t26\n97\t63\n281\t26\n753\t57\n207\t230\n803\t33\n521\t150\n739\t35\n233\t110\n537\t490\n777\t36\n377\t33\n493\t135\n365\t58\n155\t22\n315\t87\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492820791274_-1542256579",
+      "id": "20170421-202631_1922366319",
+      "dateCreated": "Apr 21, 2017 8:26:31 PM",
+      "dateStarted": "May 2, 2017 5:07:53 PM",
+      "dateFinished": "May 2, 2017 5:07:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val movie_ratings_by_user \u003d rating_data.map(fields \u003d\u003e (fields(1).toInt,fields(0).toInt)).groupByKey().map(x \u003d\u003e (x._1,x._2.size))\nval movie_rating_table \u003d movie_ratings_by_user.collect().map(line \u003d\u003e line._1+\"\\t\"+line._2).toList.mkString(\"\\n\")\nprintln(\"%table movie\\tcount\\n\" + movie_rating_table)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nmovie_ratings_by_user: org.apache.spark.rdd.RDD[(Int, Int)] \u003d MapPartitionsRDD[46] at map at \u003cconsole\u003e:31\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmovie_rating_table: String \u003d\n454\t16\n1084\t21\n1410\t4\n772\t49\n752\t39\n586\t34\n428\t121\n1328\t6\n464\t27\n14\t183\n466\t52\n1336\t10\n1040\t25\n1338\t4\n1494\t1\n912\t9\n302\t297\n140\t61\n204\t350\n956\t46\n226\t166\n1430\t3\n318\t298\n1466\t6\n1128\t13\n1414\t1\n228\t244\n1416\t5\n94\t137\n492\t59\n450\t63\n160\t69\n192\t116\n1148\t9\n1168\t22\n1282\t9\n1596\t1\n1304\t2\n992\t4\n1500\t2\n460\t28\n1390\t2\n548\t12\n1404\t13\n646\t38\n1630\t1\n758\t21\n696\t79\n528\t121\n1550\t2\n1182\t13\n1632\t1\n558\t70\n1150\t9\n1308\t2\n1386\t6\n944\t43\n58\t175\n1046\t46\n1310\t1\n1202\t8\n1280\t16\n878\t33\n196\t251\n1158\t4\n1104\t4\n338\t91\n784\t2\n848\t9\n1176\t22\n1144\t3\n1670\t1\n918\t8\n1098\t42\n292\t114\n1190\t11\n1592\t5\n1296\t20\n30\t37\n754\t57\n1262\t8\n344\t55\n1320\t1\n834\t25\n266\t35\n1344\t5\n664\t46\n252\t158\n1020\t35\n988\t86\n688\t44\n968\t18\n506\t90\n592\t9\n1468\t6\n1678\t1\n836\t26\n470\t108\n326\t175\n1556\t2\n1656\t2\n740\t63\n208\t200\n436\t99\n1186\t3\n1398\t2\n1142\t...%table movie\tcount\n454\t16\n1084\t21\n1410\t4\n772\t49\n752\t39\n586\t34\n428\t121\n1328\t6\n464\t27\n14\t183\n466\t52\n1336\t10\n1040\t25\n1338\t4\n1494\t1\n912\t9\n302\t297\n140\t61\n204\t350\n956\t46\n226\t166\n1430\t3\n318\t298\n1466\t6\n1128\t13\n1414\t1\n228\t244\n1416\t5\n94\t137\n492\t59\n450\t63\n160\t69\n192\t116\n1148\t9\n1168\t22\n1282\t9\n1596\t1\n1304\t2\n992\t4\n1500\t2\n460\t28\n1390\t2\n548\t12\n1404\t13\n646\t38\n1630\t1\n758\t21\n696\t79\n528\t121\n1550\t2\n1182\t13\n1632\t1\n558\t70\n1150\t9\n1308\t2\n1386\t6\n944\t43\n58\t175\n1046\t46\n1310\t1\n1202\t8\n1280\t16\n878\t33\n196\t251\n1158\t4\n1104\t4\n338\t91\n784\t2\n848\t9\n1176\t22\n1144\t3\n1670\t1\n918\t8\n1098\t42\n292\t114\n1190\t11\n1592\t5\n1296\t20\n30\t37\n754\t57\n1262\t8\n344\t55\n1320\t1\n834\t25\n266\t35\n1344\t5\n664\t46\n252\t158\n1020\t35\n988\t86\n688\t44\n968\t18\n506\t90\n592\t9\n1468\t6\n1678\t1\n836\t26\n470\t108\n326\t175\n1556\t2\n1656\t2\n740\t63\n208\t200\n436\t99\n1186\t3\n1398\t2\n1142\t44\n804\t8\n1172\t15\n174\t420\n1424\t3\n1044\t40\n1674\t1\n734\t27\n536\t10\n1076\t12\n1100\t8\n34\t7\n4\t209\n150\t157\n1518\t12\n1300\t9\n1042\t28\n672\t65\n1566\t1\n682\t100\n1540\t10\n796\t36\n368\t31\n1682\t1\n152\t82\n1454\t6\n1680\t1\n236\t45\n74\t7\n316\t112\n1226\t32\n406\t49\n1602\t3\n400\t18\n612\t34\n888\t15\n874\t39\n588\t202\n764\t29\n334\t64\n162\t106\n1106\t4\n224\t44\n1200\t7\n1470\t5\n120\t67\n1218\t26\n1356\t3\n994\t7\n890\t43\n166\t58\n46\t27\n1538\t3\n572\t29\n1014\t98\n1548\t1\n1472\t2\n304\t149\n1624\t1\n1228\t48\n1102\t7\n498\t152\n496\t231\n662\t82\n306\t96\n114\t67\n1498\t1\n282\t232\n1132\t32\n360\t10\n312\t80\n1532\t2\n52\t91\n1502\t2\n936\t32\n298\t194\n156\t148\n750\t124\n158\t60\n1608\t4\n720\t86\n702\t53\n456\t48\n1086\t21\n770\t57\n686\t50\n1136\t29\n64\t283\n1492\t1\n1488\t4\n362\t28\n862\t18\n1066\t16\n290\t96\n432\t174\n508\t215\n640\t82\n1354\t2\n818\t25\n714\t13\n1290\t2\n1516\t3\n966\t26\n694\t44\n280\t85\n922\t34\n1126\t32\n1050\t43\n116\t125\n1004\t9\n1170\t27\n446\t9\n1366\t1\n42\t148\n102\t54\n1620\t9\n542\t51\n488\t65\n1248\t19\n534\t13\n656\t44\n348\t27\n692\t164\n574\t15\n1002\t8\n930\t80\n744\t92\n66\t162\n906\t21\n1496\t5\n138\t19\n952\t45\n480\t179\n530\t80\n1528\t3\n1268\t10\n1418\t3\n1606\t1\n212\t92\n1318\t3\n288\t478\n1220\t30\n1352\t1\n1242\t5\n1438\t5\n330\t41\n100\t508\n482\t128\n332\t143\n676\t77\n1092\t12\n1222\t25\n300\t431\n742\t267\n850\t4\n194\t241\n812\t18\n1070\t27\n1408\t3\n1294\t7\n532\t22\n1600\t4\n118\t293\n1130\t1\n846\t44\n858\t3\n1196\t3\n658\t79\n738\t31\n722\t58\n1216\t6\n630\t31\n1270\t7\n1622\t3\n1012\t100\n556\t12\n476\t160\n950\t30\n28\t276\n958\t14\n894\t19\n1590\t2\n354\t72\n110\t31\n322\t218\n106\t71\n896\t44\n1400\t10\n1078\t22\n1638\t1\n218\t171\n274\t190\n824\t49\n760\t46\n1232\t17\n56\t394\n920\t5\n566\t179\n1484\t3\n708\t101\n1252\t9\n182\t226\n1116\t13\n1288\t7\n1660\t1\n1642\t2\n1024\t15\n1326\t6\n1578\t2\n768\t52\n1562\t1\n1370\t3\n44\t79\n88\t213\n618\t18\n670\t36\n440\t14\n876\t47\n526\t124\n502\t57\n1576\t1\n1478\t18\n856\t36\n1662\t2\n1074\t77\n622\t39\n80\t68\n1048\t73\n1448\t3\n1436\t2\n352\t26\n1056\t10\n396\t54\n270\t136\n1626\t1\n1112\t15\n998\t16\n418\t129\n552\t45\n90\t95\n238\t256\n20\t72\n18\t10\n864\t86\n342\t52\n268\t255\n1114\t10\n1214\t9\n1618\t1\n1580\t1\n1542\t2\n504\t122\n614\t51\n424\t19\n200\t206\n370\t39\n1440\t5\n142\t57\n538\t66\n220\t66\n62\t127\n1640\t1\n972\t28\n250\t197\n1456\t7\n710\t79\n444\t46\n690\t155\n1240\t26\n620\t43\n780\t69\n86\t150\n60\t64\n1450\t2\n308\t30\n1462\t7\n6\t26\n2\t131\n398\t26\n1234\t8\n554\t102\n1138\t5\n1054\t23\n1278\t16\n946\t61\n638\t44\n426\t32\n262\t66\n36\t13\n1206\t19\n1554\t2\n1038\t17\n1512\t6\n748\t316\n358\t143\n746\t119\n978\t27\n924\t85\n242\t117\n938\t25\n716\t58\n1464\t3\n1322\t6\n108\t65\n1616\t1\n1256\t3\n148\t128\n540\t43\n1384\t3\n870\t9\n940\t32\n486\t64\n410\t162\n1236\t1\n1524\t8\n48\t117\n128\t65\n1482\t1\n1088\t13\n560\t22\n210\t331\n700\t15\n642\t89\n468\t64\n1530\t5\n448\t85\n1312\t7\n392\t68\n1230\t18\n960\t25\n478\t104\n776\t9\n580\t32\n932\t40\n68\t134\n778\t76\n386\t87\n1260\t4\n1426\t8\n324\t125\n180\t221\n1080\t2\n320\t20\n1330\t4\n408\t112\n1350\t2\n1036\t24\n986\t23\n996\t14\n346\t126\n24\t174\n520\t124\n146\t10\n514\t180\n390\t10\n934\t68\n1060\t39\n1570\t1\n12\t267\n576\t93\n1162\t5\n810\t45\n628\t169\n712\t51\n1658\t3\n452\t66\n512\t57\n1246\t7\n954\t11\n1480\t11\n420\t81\n366\t47\n22\t297\n350\t41\n808\t31\n1058\t15\n1096\t3\n842\t27\n626\t4\n40\t57\n1654\t1\n434\t67\n590\t18\n136\t105\n1250\t6\n1062\t12\n1068\t12\n636\t91\n96\t295\n698\t10\n1486\t1\n524\t46\n962\t23\n1010\t44\n216\t290\n1316\t7\n1006\t23\n98\t390\n1636\t1\n884\t7\n1402\t4\n246\t124\n814\t1\n92\t104\n1406\t5\n72\t129\n1324\t5\n1664\t4\n1198\t7\n736\t78\n78\t33\n144\t243\n1120\t17\n652\t90\n494\t56\n854\t16\n84\t18\n122\t106\n404\t101\n782\t10\n76\t54\n1192\t13\n1264\t7\n310\t145\n430\t93\n774\t32\n902\t42\n1030\t20\n1428\t12\n124\t187\n164\t151\n794\t46\n1374\t2\n984\t44\n1340\t1\n1368\t6\n1574\t1\n948\t48\n1420\t3\n8\t219\n438\t6\n372\t34\n1210\t38\n820\t93\n786\t14\n1124\t12\n602\t50\n1146\t3\n474\t194\n600\t2\n1178\t19\n892\t53\n650\t72\n1022\t32\n910\t4\n798\t9\n1564\t1\n730\t24\n402\t170\n256\t16\n462\t148\n1266\t12\n1174\t8\n726\t14\n1032\t16\n1298\t9\n1598\t6\n1452\t1\n1258\t23\n616\t64\n1346\t5\n608\t30\n606\t66\n1184\t10\n172\t367\n916\t18\n678\t219\n284\t193\n190\t124\n872\t42\n378\t101\n914\t11\n674\t48\n1396\t5\n1306\t2\n1672\t2\n1154\t12\n516\t63\n176\t284\n26\t73\n840\t53\n830\t1\n1534\t6\n1362\t2\n16\t39\n54\t104\n286\t481\n376\t24\n294\t485\n928\t104\n188\t170\n380\t116\n132\t246\n634\t24\n1052\t25\n70\t251\n364\t37\n1152\t28\n500\t31\n660\t153\n10\t89\n562\t48\n1342\t2\n232\t101\n1378\t5\n240\t156\n260\t127\n490\t50\n844\t42\n258\t509\n1286\t17\n314\t5\n900\t42\n598\t4\n826\t80\n484\t138\n550\t151\n234\t280\n356\t97\n1392\t5\n1560\t4\n762\t115\n340\t189\n1166\t12\n130\t23\n860\t16\n582\t168\n1546\t1\n1434\t10\n1314\t11\n904\t20\n170\t121\n1666\t1\n1008\t37\n518\t89\n732\t180\n990\t33\n828\t13\n1358\t2\n926\t101\n624\t22\n1364\t1\n1552\t3\n964\t9\n1652\t3\n1446\t15\n38\t120\n728\t45\n1644\t2\n644\t35\n112\t20\n1284\t26\n1612\t4\n1274\t11\n1028\t148\n184\t116\n1412\t6\n632\t58\n1476\t1\n1514\t7\n1668\t1\n974\t32\n544\t71\n886\t53\n1614\t1\n1422\t4\n126\t97\n1348\t1\n1442\t5\n832\t22\n186\t251\n1254\t11\n1594\t2\n198\t127\n1224\t12\n1272\t5\n168\t316\n898\t58\n388\t28\n1016\t137\n254\t62\n1520\t1\n1026\t4\n296\t6\n1510\t1\n1676\t1\n822\t4\n82\t261\n766\t9\n866\t119\n222\t365\n1394\t7\n1156\t1\n336\t43\n214\t114\n1332\t2\n1474\t6\n472\t158\n654\t147\n1558\t7\n414\t62\n546\t254\n248\t160\n852\t1\n1382\t4\n1526\t1\n1650\t1\n1064\t4\n942\t45\n178\t125\n1504\t3\n1276\t8\n1372\t3\n704\t24\n756\t128\n1572\t1\n1508\t3\n1090\t37\n1634\t1\n1646\t2\n1522\t7\n394\t12\n1122\t1\n32\t81\n1238\t8\n1244\t36\n882\t34\n382\t111\n206\t50\n1582\t1\n806\t50\n1072\t7\n1164\t6\n244\t48\n684\t169\n1208\t20\n412\t93\n134\t198\n1388\t6\n1432\t3\n970\t8\n838\t4\n104\t5\n510\t121\n458\t90\n272\t198\n1584\t1\n202\t280\n278\t60\n868\t5\n1188\t44\n976\t12\n1034\t27\n816\t21\n1588\t2\n1568\t1\n1018\t32\n718\t16\n1506\t3\n668\t6\n980\t22\n1376\t7\n568\t230\n1094\t12\n666\t5\n1458\t1\n578\t92\n584\t79\n908\t20\n790\t66\n1604\t1\n594\t5\n1140\t17\n264\t101\n442\t4\n1380\t6\n1118\t47\n1134\t38\n1000\t10\n328\t295\n982\t20\n1360\t2\n1204\t18\n706\t6\n570\t50\n230\t199\n800\t26\n802\t40\n648\t67\n610\t41\n792\t86\n50\t583\n1334\t2\n1082\t8\n1628\t4\n416\t64\n154\t174\n1586\t1\n1160\t26\n680\t34\n596\t127\n1108\t5\n422\t26\n788\t3\n1180\t10\n564\t27\n1444\t19\n1610\t3\n724\t76\n276\t298\n1648\t1\n1536\t1\n374\t11\n1292\t3\n1194\t31\n1302\t5\n1460\t1\n1212\t6\n1490\t3\n880\t59\n604\t81\n1544\t3\n384\t69\n522\t35\n1110\t41\n451\t170\n315\t160\n667\t12\n1053\t24\n1445\t4\n11\t236\n1661\t1\n1325\t1\n195\t301\n291\t127\n1\t452\n215\t212\n931\t57\n443\t162\n755\t96\n1393\t9\n1255\t8\n1419\t16\n21\t84\n577\t41\n321\t169\n715\t87\n403\t201\n967\t12\n355\t41\n801\t16\n815\t112\n131\t95\n347\t137\n799\t5\n637\t38\n293\t147\n93\t112\n489\t52\n453\t16\n1165\t14\n1029\t14\n1677\t1\n599\t1\n1031\t7\n855\t66\n929\t40\n1377\t4\n1005\t22\n1099\t13\n1075\t7\n1363\t1\n1505\t1\n387\t65\n1297\t12\n1125\t4\n1635\t1\n1049\t25\n79\t336\n375\t23\n835\t15\n603\t209\n127\t413\n1383\t6\n275\t268\n541\t49\n1597\t5\n741\t58\n1399\t7\n827\t57\n919\t96\n83\t176\n1017\t50\n251\t46\n1509\t5\n9\t299\n651\t171\n735\t137\n423\t300\n1279\t9\n1229\t13\n1359\t2\n467\t48\n1567\t1\n397\t12\n1107\t18\n631\t119\n1289\t7\n831\t91\n1225\t14\n95\t219\n379\t43\n1641\t1\n863\t24\n501\t123\n959\t64\n869\t24\n259\t162\n759\t11\n1437\t9\n987\t4\n7\t392\n961\t34\n1035\t68\n675\t54\n1405\t6\n499\t62\n1531\t7\n695\t13\n1319\t4\n267\t9\n491\t67\n327\t175\n1407\t20\n417\t73\n1373\t1\n359\t18\n685\t157\n1155\t3\n1565\t1\n1337\t9\n683\t49\n415\t25\n791\t10\n1431\t5\n1187\t13\n1673\t1\n1555\t5\n103\t15\n1149\t26\n1065\t53\n483\t243\n269\t315\n1013\t38\n905\t27\n1157\t25\n1605\t4\n1175\t5\n343\t124\n1245\t19\n1369\t4\n601\t20\n1623\t3\n393\t192\n1235\t1\n33\t97\n1109\t28\n23\t182\n1221\t39\n1659\t1\n1243\t7\n3\t90\n935\t7\n123\t115\n1537\t4\n271\t211\n197\t239\n177\t137\n1287\t6\n557\t17\n1321\t2\n1347\t4\n1481\t2\n121\t429\n1167\t11\n1413\t8\n1177\t7\n923\t58\n727\t63\n51\t81\n973\t4\n219\t111\n567\t35\n285\t162\n843\t30\n305\t87\n421\t106\n1417\t2\n173\t324\n569\t67\n1181\t10\n629\t77\n671\t46\n1009\t64\n689\t87\n821\t22\n1435\t7\n1135\t46\n1077\t8\n555\t10\n159\t101\n1463\t3\n1185\t18\n663\t116\n857\t1\n1257\t4\n587\t14\n1133\t30\n965\t21\n117\t378\n829\t34\n1151\t7\n27\t57\n245\t240\n1205\t6\n559\t137\n249\t130\n257\t303\n163\t92\n1047\t134\n1117\t19\n1581\t1\n751\t180\n573\t33\n487\t68\n1561\t1\n209\t191\n517\t91\n129\t129\n1271\t7\n39\t87\n1503\t10\n1123\t3\n769\t42\n1545\t4\n71\t220\n733\t15\n635\t23\n171\t65\n729\t81\n1127\t11\n311\t75\n933\t21\n399\t89\n957\t2\n679\t107\n1483\t12\n1651\t1\n1207\t17\n543\t21\n1603\t1\n1231\t22\n981\t8\n1027\t3\n211\t206\n977\t49\n299\t73\n1609\t3\n217\t120\n539\t44\n139\t50\n721\t54\n509\t121\n1139\t33\n533\t15\n1003\t8\n1015\t12\n1307\t2\n59\t83\n985\t22\n411\t163\n677\t1\n1315\t23\n1265\t19\n1611\t2\n1681\t1\n897\t2\n165\t64\n809\t43\n1541\t2\n1365\t2\n31\t154\n841\t48\n661\t88\n1533\t1\n1145\t9\n647\t70\n29\t114\n633\t69\n1033\t32\n591\t178\n161\t220\n1227\t8\n1573\t2\n1011\t93\n1101\t74\n963\t41\n313\t350\n1163\t25\n435\t216\n975\t44\n1293\t3\n1129\t28\n519\t80\n337\t18\n1529\t5\n699\t102\n441\t53\n401\t76\n779\t31\n1345\t2\n585\t39\n1459\t7\n1443\t4\n371\t67\n891\t6\n479\t179\n1269\t10\n1079\t45\n1511\t5\n1569\t1\n1209\t15\n1095\t29\n461\t74\n879\t136\n575\t44\n805\t27\n1057\t22\n457\t27\n615\t59\n817\t3\n151\t326\n767\t11\n319\t168\n1253\t7\n1371\t2\n353\t14\n1375\t10\n65\t115\n639\t40\n865\t21\n913\t2\n35\t11\n1473\t9\n175\t208\n497\t68\n1349\t1\n941\t46\n743\t39\n1341\t1\n1141\t9\n969\t75\n1197\t45\n339\t47\n1495\t5\n199\t165\n1281\t13\n145\t65\n1389\t3\n583\t37\n1461\t1\n673\t86\n253\t26\n1173\t7\n1549\t2\n709\t104\n169\t118\n1497\t2\n25\t293\n1587\t1\n545\t12\n1153\t19\n1189\t3\n471\t221\n627\t75\n1577\t1\n833\t49\n1019\t31\n825\t83\n1617\t2\n1499\t4\n1479\t8\n993\t66\n871\t75\n1381\t8\n431\t153\n391\t59\n287\t78\n87\t138\n5\t86\n1487\t5\n13\t184\n455\t145\n475\t250\n1215\t30\n1259\t4\n1643\t4\n691\t16\n349\t31\n607\t66\n549\t92\n939\t60\n75\t5\n901\t12\n445\t22\n45\t80\n1465\t3\n1335\t11\n1331\t4\n1457\t1\n853\t14\n61\t59\n747\t102\n97\t256\n281\t146\n753\t24\n1513\t3\n1595\t1\n803\t9\n1285\t15\n1521\t4\n1301\t5\n777\t4\n1143\t15\n1201\t1\n1191\t3\n493\t60\n1517\t5\n1637\t1\n979\t35\n1137\t29\n1663\t1\n365\t48\n1147\t21\n893\t14\n373\t39\n369\t55\n795\t21\n1527\t7\n307\t188\n1645\t1\n1355\t6\n1523\t2\n1501\t5\n303\t134\n1329\t1\n1073\t66\n201\t89\n703\t19\n623\t39\n17\t92\n659\t115\n535\t54\n861\t3\n605\t31\n447\t121\n1601\t1\n1097\t18\n781\t84\n367\t170\n331\t113\n77\t151\n719\t29\n775\t26\n1575\t1\n283\t177\n429\t97\n255\t172\n1583\t1\n1409\t7\n1261\t4\n1467\t2\n1199\t23\n621\t11\n851\t4\n515\t201\n731\t39\n1425\t10\n1475\t8\n1069\t18\n787\t13\n547\t41\n1553\t4\n701\t10\n363\t47\n381\t100\n1217\t39\n81\t110\n1241\t6\n645\t27\n1311\t16\n419\t178\n1551\t2\n345\t65\n711\t1\n649\t50\n427\t219\n885\t13\n1579\t1\n263\t19\n1219\t20\n1477\t2\n1615\t10\n1059\t35\n1563\t1\n505\t68\n581\t59\n1025\t44\n1195\t11\n771\t41\n1427\t5\n1671\t1\n1317\t4\n849\t53\n915\t13\n553\t63\n187\t209\n1159\t11\n1055\t10\n1433\t2\n243\t132\n329\t45\n847\t55\n589\t43\n351\t20\n1353\t5\n73\t128\n665\t100\n469\t67\n507\t98\n181\t507\n571\t28\n237\t384\n1453\t1\n143\t222\n595\t64\n579\t19\n1585\t2\n389\t27\n819\t40\n1037\t24\n439\t5\n1237\t6\n907\t2\n1379\t7\n193\t157\n265\t227\n937\t37\n513\t72\n707\t70\n437\t5\n1171\t14\n1515\t1\n111\t272\n527\t195\n449\t117\n279\t28\n89\t275\n241\t128\n597\t206\n1007\t47\n481\t63\n773\t17\n99\t172\n1203\t21\n277\t71\n1447\t1\n643\t4\n53\t128\n737\t59\n333\t251\n613\t27\n845\t176\n943\t40\n561\t59\n763\t149\n705\t137\n797\t31\n1081\t8\n69\t321\n135\t259\n1559\t1\n91\t143\n1233\t6\n785\t39\n1653\t1\n239\t150\n119\t4\n189\t66\n511\t173\n867\t6\n1023\t31\n477\t95\n875\t53\n1089\t38\n1121\t21\n883\t13\n757\t4\n1111\t7\n653\t34\n925\t34\n531\t129\n1071\t16\n1291\t15\n563\t29\n1343\t1\n385\t208\n911\t4\n273\t223\n523\t164\n1493\t1\n999\t10\n43\t40\n1607\t3\n1385\t5\n301\t230\n921\t46\n839\t4\n1183\t19\n1131\t13\n1657\t1\n1063\t41\n1091\t43\n899\t9\n1267\t33\n1387\t3\n1619\t1\n1115\t29\n995\t31\n895\t106\n1043\t8\n1367\t5\n295\t77\n335\t21\n361\t10\n1303\t18\n749\t51\n357\t264\n433\t171\n881\t45\n19\t69\n609\t60\n1277\t19\n297\t50\n723\t34\n1305\t7\n1525\t1\n641\t33\n529\t93\n1421\t11\n1547\t2\n1625\t1\n1211\t12\n1239\t18\n473\t126\n1591\t6\n235\t217\n1339\t1\n909\t13\n1471\t9\n1449\t8\n37\t8\n185\t239\n1415\t9\n247\t5\n63\t82\n1535\t4\n203\t182\n309\t28\n859\t15\n1441\t7\n1669\t1\n1061\t29\n1045\t25\n681\t27\n697\t40\n945\t40\n1639\t3\n1631\t2\n113\t9\n565\t22\n1439\t8\n525\t73\n413\t55\n137\t171\n229\t171\n953\t22\n783\t37\n1357\t3\n1519\t2\n231\t142\n1507\t1\n551\t24\n191\t276\n793\t10\n761\t44\n57\t40\n149\t23\n655\t227\n1629\t2\n1295\t7\n463\t71\n1087\t10\n997\t16\n1193\t10\n49\t81\n1085\t11\n693\t91\n109\t130\n1397\t5\n167\t67\n1679\t1\n115\t15\n15\t293\n1599\t1\n717\t82\n903\t18\n1161\t13\n1051\t41\n1411\t28\n823\t82\n1489\t5\n1539\t4\n227\t161\n889\t13\n317\t102\n813\t56\n1469\t12\n141\t72\n221\t74\n1351\t3\n1273\t15\n223\t136\n1113\t22\n745\t16\n1401\t18\n917\t7\n669\t13\n1247\t6\n955\t49\n1621\t1\n1649\t1\n101\t73\n1067\t44\n593\t12\n153\t247\n807\t9\n1179\t9\n289\t259\n105\t74\n1451\t15\n125\t244\n157\t127\n1665\t1\n383\t31\n1429\t4\n625\t82\n611\t40\n459\t24\n1403\t4\n1327\t3\n1299\t8\n495\t59\n1083\t6\n1627\t1\n341\t11\n887\t64\n1543\t1\n1169\t10\n725\t16\n1323\t3\n657\t131\n713\t72\n41\t37\n409\t70\n1283\t19\n837\t25\n971\t34\n1667\t1\n261\t43\n1589\t4\n395\t56\n1485\t4\n1675\t1\n617\t18\n947\t17\n1395\t6\n1213\t6\n213\t134\n503\t39\n1491\t2\n1119\t59\n1613\t1\n1361\t3\n877\t52\n67\t103\n1251\t8\n811\t18\n425\t85\n1309\t1\n405\t344\n789\t47\n85\t58\n1333\t5\n1313\t14\n225\t109\n1039\t90\n619\t64\n1263\t15\n1571\t1\n1223\t4\n465\t85\n325\t128\n323\t240\n407\t43\n55\t149\n927\t6\n107\t42\n1021\t38\n765\t32\n1455\t2\n1647\t1\n179\t221\n1633\t1\n983\t15\n133\t171\n205\t136\n949\t71\n1275\t4\n873\t81\n951\t39\n183\t291\n1041\t62\n1593\t1\n1391\t3\n1655\t1\n1423\t4\n687\t69\n1001\t17\n47\t133\n1557\t1\n1093\t23\n485\t125\n989\t32\n1103\t19\n207\t66\n521\t120\n739\t164\n233\t124\n1249\t12\n991\t25\n537\t30\n1105\t18\n377\t13\n155\t98\n147\t185\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492821201418_-1947000911",
+      "id": "20170421-203321_135276871",
+      "dateCreated": "Apr 21, 2017 8:33:21 PM",
+      "dateStarted": "May 2, 2017 5:07:54 PM",
+      "dateFinished": "May 2, 2017 5:07:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "println(\"%table movie\\tcount\\n\" + movie_rating_table)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "movie\tcount\n454\t16\n1084\t21\n1410\t4\n772\t49\n752\t39\n586\t34\n428\t121\n1328\t6\n464\t27\n14\t183\n466\t52\n1336\t10\n1040\t25\n1338\t4\n1494\t1\n912\t9\n302\t297\n140\t61\n204\t350\n956\t46\n226\t166\n1430\t3\n318\t298\n1466\t6\n1128\t13\n1414\t1\n228\t244\n1416\t5\n94\t137\n492\t59\n450\t63\n160\t69\n192\t116\n1148\t9\n1168\t22\n1282\t9\n1596\t1\n1304\t2\n992\t4\n1500\t2\n460\t28\n1390\t2\n548\t12\n1404\t13\n646\t38\n1630\t1\n758\t21\n696\t79\n528\t121\n1550\t2\n1182\t13\n1632\t1\n558\t70\n1150\t9\n1308\t2\n1386\t6\n944\t43\n58\t175\n1046\t46\n1310\t1\n1202\t8\n1280\t16\n878\t33\n196\t251\n1158\t4\n1104\t4\n338\t91\n784\t2\n848\t9\n1176\t22\n1144\t3\n1670\t1\n918\t8\n1098\t42\n292\t114\n1190\t11\n1592\t5\n1296\t20\n30\t37\n754\t57\n1262\t8\n344\t55\n1320\t1\n834\t25\n266\t35\n1344\t5\n664\t46\n252\t158\n1020\t35\n988\t86\n688\t44\n968\t18\n506\t90\n592\t9\n1468\t6\n1678\t1\n836\t26\n470\t108\n326\t175\n1556\t2\n1656\t2\n740\t63\n208\t200\n436\t99\n1186\t3\n1398\t2\n1142\t44\n804\t8\n1172\t15\n174\t420\n1424\t3\n1044\t40\n1674\t1\n734\t27\n536\t10\n1076\t12\n1100\t8\n34\t7\n4\t209\n150\t157\n1518\t12\n1300\t9\n1042\t28\n672\t65\n1566\t1\n682\t100\n1540\t10\n796\t36\n368\t31\n1682\t1\n152\t82\n1454\t6\n1680\t1\n236\t45\n74\t7\n316\t112\n1226\t32\n406\t49\n1602\t3\n400\t18\n612\t34\n888\t15\n874\t39\n588\t202\n764\t29\n334\t64\n162\t106\n1106\t4\n224\t44\n1200\t7\n1470\t5\n120\t67\n1218\t26\n1356\t3\n994\t7\n890\t43\n166\t58\n46\t27\n1538\t3\n572\t29\n1014\t98\n1548\t1\n1472\t2\n304\t149\n1624\t1\n1228\t48\n1102\t7\n498\t152\n496\t231\n662\t82\n306\t96\n114\t67\n1498\t1\n282\t232\n1132\t32\n360\t10\n312\t80\n1532\t2\n52\t91\n1502\t2\n936\t32\n298\t194\n156\t148\n750\t124\n158\t60\n1608\t4\n720\t86\n702\t53\n456\t48\n1086\t21\n770\t57\n686\t50\n1136\t29\n64\t283\n1492\t1\n1488\t4\n362\t28\n862\t18\n1066\t16\n290\t96\n432\t174\n508\t215\n640\t82\n1354\t2\n818\t25\n714\t13\n1290\t2\n1516\t3\n966\t26\n694\t44\n280\t85\n922\t34\n1126\t32\n1050\t43\n116\t125\n1004\t9\n1170\t27\n446\t9\n1366\t1\n42\t148\n102\t54\n1620\t9\n542\t51\n488\t65\n1248\t19\n534\t13\n656\t44\n348\t27\n692\t164\n574\t15\n1002\t8\n930\t80\n744\t92\n66\t162\n906\t21\n1496\t5\n138\t19\n952\t45\n480\t179\n530\t80\n1528\t3\n1268\t10\n1418\t3\n1606\t1\n212\t92\n1318\t3\n288\t478\n1220\t30\n1352\t1\n1242\t5\n1438\t5\n330\t41\n100\t508\n482\t128\n332\t143\n676\t77\n1092\t12\n1222\t25\n300\t431\n742\t267\n850\t4\n194\t241\n812\t18\n1070\t27\n1408\t3\n1294\t7\n532\t22\n1600\t4\n118\t293\n1130\t1\n846\t44\n858\t3\n1196\t3\n658\t79\n738\t31\n722\t58\n1216\t6\n630\t31\n1270\t7\n1622\t3\n1012\t100\n556\t12\n476\t160\n950\t30\n28\t276\n958\t14\n894\t19\n1590\t2\n354\t72\n110\t31\n322\t218\n106\t71\n896\t44\n1400\t10\n1078\t22\n1638\t1\n218\t171\n274\t190\n824\t49\n760\t46\n1232\t17\n56\t394\n920\t5\n566\t179\n1484\t3\n708\t101\n1252\t9\n182\t226\n1116\t13\n1288\t7\n1660\t1\n1642\t2\n1024\t15\n1326\t6\n1578\t2\n768\t52\n1562\t1\n1370\t3\n44\t79\n88\t213\n618\t18\n670\t36\n440\t14\n876\t47\n526\t124\n502\t57\n1576\t1\n1478\t18\n856\t36\n1662\t2\n1074\t77\n622\t39\n80\t68\n1048\t73\n1448\t3\n1436\t2\n352\t26\n1056\t10\n396\t54\n270\t136\n1626\t1\n1112\t15\n998\t16\n418\t129\n552\t45\n90\t95\n238\t256\n20\t72\n18\t10\n864\t86\n342\t52\n268\t255\n1114\t10\n1214\t9\n1618\t1\n1580\t1\n1542\t2\n504\t122\n614\t51\n424\t19\n200\t206\n370\t39\n1440\t5\n142\t57\n538\t66\n220\t66\n62\t127\n1640\t1\n972\t28\n250\t197\n1456\t7\n710\t79\n444\t46\n690\t155\n1240\t26\n620\t43\n780\t69\n86\t150\n60\t64\n1450\t2\n308\t30\n1462\t7\n6\t26\n2\t131\n398\t26\n1234\t8\n554\t102\n1138\t5\n1054\t23\n1278\t16\n946\t61\n638\t44\n426\t32\n262\t66\n36\t13\n1206\t19\n1554\t2\n1038\t17\n1512\t6\n748\t316\n358\t143\n746\t119\n978\t27\n924\t85\n242\t117\n938\t25\n716\t58\n1464\t3\n1322\t6\n108\t65\n1616\t1\n1256\t3\n148\t128\n540\t43\n1384\t3\n870\t9\n940\t32\n486\t64\n410\t162\n1236\t1\n1524\t8\n48\t117\n128\t65\n1482\t1\n1088\t13\n560\t22\n210\t331\n700\t15\n642\t89\n468\t64\n1530\t5\n448\t85\n1312\t7\n392\t68\n1230\t18\n960\t25\n478\t104\n776\t9\n580\t32\n932\t40\n68\t134\n778\t76\n386\t87\n1260\t4\n1426\t8\n324\t125\n180\t221\n1080\t2\n320\t20\n1330\t4\n408\t112\n1350\t2\n1036\t24\n986\t23\n996\t14\n346\t126\n24\t174\n520\t124\n146\t10\n514\t180\n390\t10\n934\t68\n1060\t39\n1570\t1\n12\t267\n576\t93\n1162\t5\n810\t45\n628\t169\n712\t51\n1658\t3\n452\t66\n512\t57\n1246\t7\n954\t11\n1480\t11\n420\t81\n366\t47\n22\t297\n350\t41\n808\t31\n1058\t15\n1096\t3\n842\t27\n626\t4\n40\t57\n1654\t1\n434\t67\n590\t18\n136\t105\n1250\t6\n1062\t12\n1068\t12\n636\t91\n96\t295\n698\t10\n1486\t1\n524\t46\n962\t23\n1010\t44\n216\t290\n1316\t7\n1006\t23\n98\t390\n1636\t1\n884\t7\n1402\t4\n246\t124\n814\t1\n92\t104\n1406\t5\n72\t129\n1324\t5\n1664\t4\n1198\t7\n736\t78\n78\t33\n144\t243\n1120\t17\n652\t90\n494\t56\n854\t16\n84\t18\n122\t106\n404\t101\n782\t10\n76\t54\n1192\t13\n1264\t7\n310\t145\n430\t93\n774\t32\n902\t42\n1030\t20\n1428\t12\n124\t187\n164\t151\n794\t46\n1374\t2\n984\t44\n1340\t1\n1368\t6\n1574\t1\n948\t48\n1420\t3\n8\t219\n438\t6\n372\t34\n1210\t38\n820\t93\n786\t14\n1124\t12\n602\t50\n1146\t3\n474\t194\n600\t2\n1178\t19\n892\t53\n650\t72\n1022\t32\n910\t4\n798\t9\n1564\t1\n730\t24\n402\t170\n256\t16\n462\t148\n1266\t12\n1174\t8\n726\t14\n1032\t16\n1298\t9\n1598\t6\n1452\t1\n1258\t23\n616\t64\n1346\t5\n608\t30\n606\t66\n1184\t10\n172\t367\n916\t18\n678\t219\n284\t193\n190\t124\n872\t42\n378\t101\n914\t11\n674\t48\n1396\t5\n1306\t2\n1672\t2\n1154\t12\n516\t63\n176\t284\n26\t73\n840\t53\n830\t1\n1534\t6\n1362\t2\n16\t39\n54\t104\n286\t481\n376\t24\n294\t485\n928\t104\n188\t170\n380\t116\n132\t246\n634\t24\n1052\t25\n70\t251\n364\t37\n1152\t28\n500\t31\n660\t153\n10\t89\n562\t48\n1342\t2\n232\t101\n1378\t5\n240\t156\n260\t127\n490\t50\n844\t42\n258\t509\n1286\t17\n314\t5\n900\t42\n598\t4\n826\t80\n484\t138\n550\t151\n234\t280\n356\t97\n1392\t5\n1560\t4\n762\t115\n340\t189\n1166\t12\n130\t23\n860\t16\n582\t168\n1546\t1\n1434\t10\n1314\t11\n904\t20\n170\t121\n1666\t1\n1008\t37\n518\t89\n732\t180\n990\t33\n828\t13\n1358\t2\n926\t101\n624\t22\n1364\t1\n1552\t3\n964\t9\n1652\t3\n1446\t15\n38\t120\n728\t45\n1644\t2\n644\t35\n112\t20\n1284\t26\n1612\t4\n1274\t11\n1028\t148\n184\t116\n1412\t6\n632\t58\n1476\t1\n1514\t7\n1668\t1\n974\t32\n544\t71\n886\t53\n1614\t1\n1422\t4\n126\t97\n1348\t1\n1442\t5\n832\t22\n186\t251\n1254\t11\n1594\t2\n198\t127\n1224\t12\n1272\t5\n168\t316\n898\t58\n388\t28\n1016\t137\n254\t62\n1520\t1\n1026\t4\n296\t6\n1510\t1\n1676\t1\n822\t4\n82\t261\n766\t9\n866\t119\n222\t365\n1394\t7\n1156\t1\n336\t43\n214\t114\n1332\t2\n1474\t6\n472\t158\n654\t147\n1558\t7\n414\t62\n546\t254\n248\t160\n852\t1\n1382\t4\n1526\t1\n1650\t1\n1064\t4\n942\t45\n178\t125\n1504\t3\n1276\t8\n1372\t3\n704\t24\n756\t128\n1572\t1\n1508\t3\n1090\t37\n1634\t1\n1646\t2\n1522\t7\n394\t12\n1122\t1\n32\t81\n1238\t8\n1244\t36\n882\t34\n382\t111\n206\t50\n1582\t1\n806\t50\n1072\t7\n1164\t6\n244\t48\n684\t169\n1208\t20\n412\t93\n134\t198\n1388\t6\n1432\t3\n970\t8\n838\t4\n104\t5\n510\t121\n458\t90\n272\t198\n1584\t1\n202\t280\n278\t60\n868\t5\n1188\t44\n976\t12\n1034\t27\n816\t21\n1588\t2\n1568\t1\n1018\t32\n718\t16\n1506\t3\n668\t6\n980\t22\n1376\t7\n568\t230\n1094\t12\n666\t5\n1458\t1\n578\t92\n584\t79\n908\t20\n790\t66\n1604\t1\n594\t5\n1140\t17\n264\t101\n442\t4\n1380\t6\n1118\t47\n1134\t38\n1000\t10\n328\t295\n982\t20\n1360\t2\n1204\t18\n706\t6\n570\t50\n230\t199\n800\t26\n802\t40\n648\t67\n610\t41\n792\t86\n50\t583\n1334\t2\n1082\t8\n1628\t4\n416\t64\n154\t174\n1586\t1\n1160\t26\n680\t34\n596\t127\n1108\t5\n422\t26\n788\t3\n1180\t10\n564\t27\n1444\t19\n1610\t3\n724\t76\n276\t298\n1648\t1\n1536\t1\n374\t11\n1292\t3\n1194\t31\n1302\t5\n1460\t1\n1212\t6\n1490\t3\n880\t59\n604\t81\n1544\t3\n384\t69\n522\t35\n1110\t41\n451\t170\n315\t160\n667\t12\n1053\t24\n1445\t4\n11\t236\n1661\t1\n1325\t1\n195\t301\n291\t127\n1\t452\n215\t212\n931\t57\n443\t162\n755\t96\n1393\t9\n1255\t8\n1419\t16\n21\t84\n577\t41\n321\t169\n715\t87\n403\t201\n967\t12\n355\t41\n801\t16\n815\t112\n131\t95\n347\t137\n799\t5\n637\t38\n293\t147\n93\t112\n489\t52\n453\t16\n1165\t14\n1029\t14\n1677\t1\n599\t1\n1031\t7\n855\t66\n929\t40\n1377\t4\n1005\t22\n1099\t13\n1075\t7\n1363\t1\n1505\t1\n387\t65\n1297\t12\n1125\t4\n1635\t1\n1049\t25\n79\t336\n375\t23\n835\t15\n603\t209\n127\t413\n1383\t6\n275\t268\n541\t49\n1597\t5\n741\t58\n1399\t7\n827\t57\n919\t96\n83\t176\n1017\t50\n251\t46\n1509\t5\n9\t299\n651\t171\n735\t137\n423\t300\n1279\t9\n1229\t13\n1359\t2\n467\t48\n1567\t1\n397\t12\n1107\t18\n631\t119\n1289\t7\n831\t91\n1225\t14\n95\t219\n379\t43\n1641\t1\n863\t24\n501\t123\n959\t64\n869\t24\n259\t162\n759\t11\n1437\t9\n987\t4\n7\t392\n961\t34\n1035\t68\n675\t54\n1405\t6\n499\t62\n1531\t7\n695\t13\n1319\t4\n267\t9\n491\t67\n327\t175\n1407\t20\n417\t73\n1373\t1\n359\t18\n685\t157\n1155\t3\n1565\t1\n1337\t9\n683\t49\n415\t25\n791\t10\n1431\t5\n1187\t13\n1673\t1\n1555\t5\n103\t15\n1149\t26\n1065\t53\n483\t243\n269\t315\n1013\t38\n905\t27\n1157\t25\n1605\t4\n1175\t5\n343\t124\n1245\t19\n1369\t4\n601\t20\n1623\t3\n393\t192\n1235\t1\n33\t97\n1109\t28\n23\t182\n1221\t39\n1659\t1\n1243\t7\n3\t90\n935\t7\n123\t115\n1537\t4\n271\t211\n197\t239\n177\t137\n1287\t6\n557\t17\n1321\t2\n1347\t4\n1481\t2\n121\t429\n1167\t11\n1413\t8\n1177\t7\n923\t58\n727\t63\n51\t81\n973\t4\n219\t111\n567\t35\n285\t162\n843\t30\n305\t87\n421\t106\n1417\t2\n173\t324\n569\t67\n1181\t10\n629\t77\n671\t46\n1009\t64\n689\t87\n821\t22\n1435\t7\n1135\t46\n1077\t8\n555\t10\n159\t101\n1463\t3\n1185\t18\n663\t116\n857\t1\n1257\t4\n587\t14\n1133\t30\n965\t21\n117\t378\n829\t34\n1151\t7\n27\t57\n245\t240\n1205\t6\n559\t137\n249\t130\n257\t303\n163\t92\n1047\t134\n1117\t19\n1581\t1\n751\t180\n573\t33\n487\t68\n1561\t1\n209\t191\n517\t91\n129\t129\n1271\t7\n39\t87\n1503\t10\n1123\t3\n769\t42\n1545\t4\n71\t220\n733\t15\n635\t23\n171\t65\n729\t81\n1127\t11\n311\t75\n933\t21\n399\t89\n957\t2\n679\t107\n1483\t12\n1651\t1\n1207\t17\n543\t21\n1603\t1\n1231\t22\n981\t8\n1027\t3\n211\t206\n977\t49\n299\t73\n1609\t3\n217\t120\n539\t44\n139\t50\n721\t54\n509\t121\n1139\t33\n533\t15\n1003\t8\n1015\t12\n1307\t2\n59\t83\n985\t22\n411\t163\n677\t1\n1315\t23\n1265\t19\n1611\t2\n1681\t1\n897\t2\n165\t64\n809\t43\n1541\t2\n1365\t2\n31\t154\n841\t48\n661\t88\n1533\t1\n1145\t9\n647\t70\n29\t114\n633\t69\n1033\t32\n591\t178\n161\t220\n1227\t8\n1573\t2\n1011\t93\n1101\t74\n963\t41\n313\t350\n1163\t25\n435\t216\n975\t44\n1293\t3\n1129\t28\n519\t80\n337\t18\n1529\t5\n699\t102\n441\t53\n401\t76\n779\t31\n1345\t2\n585\t39\n1459\t7\n1443\t4\n371\t67\n891\t6\n479\t179\n1269\t10\n1079\t45\n1511\t5\n1569\t1\n1209\t15\n1095\t29\n461\t74\n879\t136\n575\t44\n805\t27\n1057\t22\n457\t27\n615\t59\n817\t3\n151\t326\n767\t11\n319\t168\n1253\t7\n1371\t2\n353\t14\n1375\t10\n65\t115\n639\t40\n865\t21\n913\t2\n35\t11\n1473\t9\n175\t208\n497\t68\n1349\t1\n941\t46\n743\t39\n1341\t1\n1141\t9\n969\t75\n1197\t45\n339\t47\n1495\t5\n199\t165\n1281\t13\n145\t65\n1389\t3\n583\t37\n1461\t1\n673\t86\n253\t26\n1173\t7\n1549\t2\n709\t104\n169\t118\n1497\t2\n25\t293\n1587\t1\n545\t12\n1153\t19\n1189\t3\n471\t221\n627\t75\n1577\t1\n833\t49\n1019\t31\n825\t83\n1617\t2\n1499\t4\n1479\t8\n993\t66\n871\t75\n1381\t8\n431\t153\n391\t59\n287\t78\n87\t138\n5\t86\n1487\t5\n13\t184\n455\t145\n475\t250\n1215\t30\n1259\t4\n1643\t4\n691\t16\n349\t31\n607\t66\n549\t92\n939\t60\n75\t5\n901\t12\n445\t22\n45\t80\n1465\t3\n1335\t11\n1331\t4\n1457\t1\n853\t14\n61\t59\n747\t102\n97\t256\n281\t146\n753\t24\n1513\t3\n1595\t1\n803\t9\n1285\t15\n1521\t4\n1301\t5\n777\t4\n1143\t15\n1201\t1\n1191\t3\n493\t60\n1517\t5\n1637\t1\n979\t35\n1137\t29\n1663\t1\n365\t48\n1147\t21\n893\t14\n373\t39\n369\t55\n795\t21\n1527\t7\n307\t188\n1645\t1\n1355\t6\n1523\t2\n1501\t5\n303\t134\n1329\t1\n1073\t66\n201\t89\n703\t19\n623\t39\n17\t92\n659\t115\n535\t54\n861\t3\n605\t31\n447\t121\n1601\t1\n1097\t18\n781\t84\n367\t170\n331\t113\n77\t151\n719\t29\n775\t26\n1575\t1\n283\t177\n429\t97\n255\t172\n1583\t1\n1409\t7\n1261\t4\n1467\t2\n1199\t23\n621\t11\n851\t4\n515\t201\n731\t39\n1425\t10\n1475\t8\n1069\t18\n787\t13\n547\t41\n1553\t4\n701\t10\n363\t47\n381\t100\n1217\t39\n81\t110\n1241\t6\n645\t27\n1311\t16\n419\t178\n1551\t2\n345\t65\n711\t1\n649\t50\n427\t219\n885\t13\n1579\t1\n263\t19\n1219\t20\n1477\t2\n1615\t10\n1059\t35\n1563\t1\n505\t68\n581\t59\n1025\t44\n1195\t11\n771\t41\n1427\t5\n1671\t1\n1317\t4\n849\t53\n915\t13\n553\t63\n187\t209\n1159\t11\n1055\t10\n1433\t2\n243\t132\n329\t45\n847\t55\n589\t43\n351\t20\n1353\t5\n73\t128\n665\t100\n469\t67\n507\t98\n181\t507\n571\t28\n237\t384\n1453\t1\n143\t222\n595\t64\n579\t19\n1585\t2\n389\t27\n819\t40\n1037\t24\n439\t5\n1237\t6\n907\t2\n1379\t7\n193\t157\n265\t227\n937\t37\n513\t72\n707\t70\n437\t5\n1171\t14\n1515\t1\n111\t272\n527\t195\n449\t117\n279\t28\n89\t275\n241\t128\n597\t206\n1007\t47\n481\t63\n773\t17\n99\t172\n1203\t21\n277\t71\n1447\t1\n643\t4\n53\t128\n737\t59\n333\t251\n613\t27\n845\t176\n943\t40\n561\t59\n763\t149\n705\t137\n797\t31\n1081\t8\n69\t321\n135\t259\n1559\t1\n91\t143\n1233\t6\n785\t39\n1653\t1\n239\t150\n119\t4\n189\t66\n511\t173\n867\t6\n1023\t31\n477\t95\n875\t53\n1089\t38\n1121\t21\n883\t13\n757\t4\n1111\t7\n653\t34\n925\t34\n531\t129\n1071\t16\n1291\t15\n563\t29\n1343\t1\n385\t208\n911\t4\n273\t223\n523\t164\n1493\t1\n999\t10\n43\t40\n1607\t3\n1385\t5\n301\t230\n921\t46\n839\t4\n1183\t19\n1131\t13\n1657\t1\n1063\t41\n1091\t43\n899\t9\n1267\t33\n1387\t3\n1619\t1\n1115\t29\n995\t31\n895\t106\n1043\t8\n1367\t5\n295\t77\n335\t21\n361\t10\n1303\t18\n749\t51\n357\t264\n433\t171\n881\t45\n19\t69\n609\t60\n1277\t19\n297\t50\n723\t34\n1305\t7\n1525\t1\n641\t33\n529\t93\n1421\t11\n1547\t2\n1625\t1\n1211\t12\n1239\t18\n473\t126\n1591\t6\n235\t217\n1339\t1\n909\t13\n1471\t9\n1449\t8\n37\t8\n185\t239\n1415\t9\n247\t5\n63\t82\n1535\t4\n203\t182\n309\t28\n859\t15\n1441\t7\n1669\t1\n1061\t29\n1045\t25\n681\t27\n697\t40\n945\t40\n1639\t3\n1631\t2\n113\t9\n565\t22\n1439\t8\n525\t73\n413\t55\n137\t171\n229\t171\n953\t22\n783\t37\n1357\t3\n1519\t2\n231\t142\n1507\t1\n551\t24\n191\t276\n793\t10\n761\t44\n57\t40\n149\t23\n655\t227\n1629\t2\n1295\t7\n463\t71\n1087\t10\n997\t16\n1193\t10\n49\t81\n1085\t11\n693\t91\n109\t130\n1397\t5\n167\t67\n1679\t1\n115\t15\n15\t293\n1599\t1\n717\t82\n903\t18\n1161\t13\n1051\t41\n1411\t28\n823\t82\n1489\t5\n1539\t4\n227\t161\n889\t13\n317\t102\n813\t56\n1469\t12\n141\t72\n221\t74\n1351\t3\n1273\t15\n223\t136\n1113\t22\n745\t16\n1401\t18\n917\t7\n669\t13\n1247\t6\n955\t49\n1621\t1\n1649\t1\n101\t73\n1067\t44\n593\t12\n153\t247\n807\t9\n1179\t9\n289\t259\n105\t74\n1451\t15\n125\t244\n157\t127\n1665\t1\n383\t31\n1429\t4\n625\t82\n611\t40\n459\t24\n1403\t4\n1327\t3\n1299\t8\n495\t59\n1083\t6\n1627\t1\n341\t11\n887\t64\n1543\t1\n1169\t10\n725\t16\n1323\t3\n657\t131\n713\t72\n41\t37\n409\t70\n1283\t19\n837\t25\n971\t34\n1667\t1\n261\t43\n1589\t4\n395\t56\n1485\t4\n1675\t1\n617\t18\n947\t17\n1395\t6\n1213\t6\n213\t134\n503\t39\n1491\t2\n1119\t59\n1613\t1\n1361\t3\n877\t52\n67\t103\n1251\t8\n811\t18\n425\t85\n1309\t1\n405\t344\n789\t47\n85\t58\n1333\t5\n1313\t14\n225\t109\n1039\t90\n619\t64\n1263\t15\n1571\t1\n1223\t4\n465\t85\n325\t128\n323\t240\n407\t43\n55\t149\n927\t6\n107\t42\n1021\t38\n765\t32\n1455\t2\n1647\t1\n179\t221\n1633\t1\n983\t15\n133\t171\n205\t136\n949\t71\n1275\t4\n873\t81\n951\t39\n183\t291\n1041\t62\n1593\t1\n1391\t3\n1655\t1\n1423\t4\n687\t69\n1001\t17\n47\t133\n1557\t1\n1093\t23\n485\t125\n989\t32\n1103\t19\n207\t66\n521\t120\n739\t164\n233\t124\n1249\t12\n991\t25\n537\t30\n1105\t18\n377\t13\n155\t98\n147\t185\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492821266336_893089587",
+      "id": "20170421-203426_1987543565",
+      "dateCreated": "Apr 21, 2017 8:34:26 PM",
+      "dateStarted": "May 2, 2017 5:07:54 PM",
+      "dateFinished": "May 2, 2017 5:07:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val movie_ratings \u003d rating_data.map(fields \u003d\u003e (fields(1).toInt,fields(2).toInt)).groupByKey().map(x \u003d\u003e (x._1,x._2.size))\nval movie_name \u003d  movie_data.map(line \u003d\u003e line.split(\"\\\\|\")).map(array \u003d\u003e (array(0).toInt,array(1).toString))\nval movie_joined \u003d movie_name.join(movie_ratings)\nval movie_name_rate \u003d movie_joined.map(line \u003d\u003e (line._2._1,line._2._2)).sortBy(_._2,false).take(25).map(line \u003d\u003e line._1+\"\\t\"+line._2).toList.mkString(\"\\n\")\nprintln(\"%table name\\trating\\n\" + movie_name_rate)\n",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:25:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nmovie_ratings: org.apache.spark.rdd.RDD[(Int, Int)] \u003d MapPartitionsRDD[49] at map at \u003cconsole\u003e:31\n\nmovie_name: org.apache.spark.rdd.RDD[(Int, String)] \u003d MapPartitionsRDD[51] at map at \u003cconsole\u003e:29\n\nmovie_joined: org.apache.spark.rdd.RDD[(Int, (String, Int))] \u003d MapPartitionsRDD[54] at join at \u003cconsole\u003e:37\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmovie_name_rate: String \u003d\nStar Wars (1977)\t583\nContact (1997)\t509\nFargo (1996)\t508\nReturn of the Jedi (1983)\t507\nLiar Liar (1997)\t485\nEnglish Patient, The (1996)\t481\nScream (1996)\t478\nToy Story (1995)\t452\nAir Force One (1997)\t431\nIndependence Day (ID4) (1996)\t429\nRaiders of the Lost Ark (1981)\t420\nGodfather, The (1972)\t413\nPulp Fiction (1994)\t394\nTwelve Monkeys (1995)\t392\nSilence of the Lambs, The (1991)\t390\nJerry Maguire (1996)\t384\nRock, The (1996)\t378\nEmpire Strikes Back, The (1980)\t367\nStar Trek: First Contact (1996)\t365\nBack to the Future (1985)\t350\nTitanic (1997)\t350\nMission: Impossible (1996)\t344\nFugitive, The (1993)\t336\nIndiana Jones and the Last Crusade (1989)\t331\nWilly Wonka and the Chocolate Factory (1971)\t326\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "name\trating\nStar Wars (1977)\t583\nContact (1997)\t509\nFargo (1996)\t508\nReturn of the Jedi (1983)\t507\nLiar Liar (1997)\t485\nEnglish Patient, The (1996)\t481\nScream (1996)\t478\nToy Story (1995)\t452\nAir Force One (1997)\t431\nIndependence Day (ID4) (1996)\t429\nRaiders of the Lost Ark (1981)\t420\nGodfather, The (1972)\t413\nPulp Fiction (1994)\t394\nTwelve Monkeys (1995)\t392\nSilence of the Lambs, The (1991)\t390\nJerry Maguire (1996)\t384\nRock, The (1996)\t378\nEmpire Strikes Back, The (1980)\t367\nStar Trek: First Contact (1996)\t365\nBack to the Future (1985)\t350\nTitanic (1997)\t350\nMission: Impossible (1996)\t344\nFugitive, The (1993)\t336\nIndiana Jones and the Last Crusade (1989)\t331\nWilly Wonka and the Chocolate Factory (1971)\t326\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493081229179_-1709045826",
+      "id": "20170424-204709_1210242096",
+      "dateCreated": "Apr 24, 2017 8:47:09 PM",
+      "dateStarted": "May 2, 2017 5:07:55 PM",
+      "dateFinished": "May 2, 2017 5:07:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val movie_ratings_all \u003d rating_data.map(fields \u003d\u003e (fields(1).toInt,fields(2).toDouble)).reduceByKey((a, b) \u003d\u003e a + b)\nval movie_joined1 \u003d movie_ratings_all.join(movie_ratings)\nval movie_joined2 \u003d movie_joined1.join(movie_name)\nmovie_joined2.first\nval movie_rating_aver \u003d movie_joined2.map(line \u003d\u003e (line._2._2, line._2._1._1,line._2._1._2)).filter(_._3 \u003e 50).map(line \u003d\u003e (line._1, line._3,(line._2 / line._3).formatted(\"%.4f\"))).sortBy(_._3,false).take(10)\nval movie_aver_table \u003d movie_rating_aver.map(line \u003d\u003e (line._1 + \"\\t\" + line._2+\"\\t\" + line._3)).toList.mkString(\"\\n\")\nprintln(\"%table name\\trating_times\\taverage_rating\\n\" + movie_aver_table)\n",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:26:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nmovie_ratings_all: org.apache.spark.rdd.RDD[(Int, Double)] \u003d ShuffledRDD[683] at reduceByKey at \u003cconsole\u003e:40\n\nmovie_joined1: org.apache.spark.rdd.RDD[(Int, (Double, Int))] \u003d MapPartitionsRDD[686] at join at \u003cconsole\u003e:44\n\nmovie_joined2: org.apache.spark.rdd.RDD[(Int, ((Double, Int), String))] \u003d MapPartitionsRDD[689] at join at \u003cconsole\u003e:50\n\nres33: (Int, ((Double, Int), String)) \u003d (454,((46.0,16),Bastard Out of Carolina (1996)))\n\nmovie_rating_aver: Array[(String, Int, String)] \u003d Array((Close Shave, A (1995),112,4.4911), (Schindler\u0027s List (1993),298,4.4664), (Wrong Trousers, The (1993),118,4.4661), (Casablanca (1942),243,4.4568), (Wallace \u0026 Gromit: The Best of Aardman Animation (1996),67,4.4478), (Shawshank Redemption, The (1994),283,4.4452), (Rear Window (1954),209,4.3876), (Usual Suspects, The (1995),267,4.3858), (Star Wars (1977),583,4.3585), (12 Angry Men (1957),125,4.3440))\n\n\n\n\n\n\n\n\n\n\n\nmovie_aver_table: String \u003d\nClose Shave, A (1995)\t112\t4.4911\nSchindler\u0027s List (1993)\t298\t4.4664\nWrong Trousers, The (1993)\t118\t4.4661\nCasablanca (1942)\t243\t4.4568\nWallace \u0026 Gromit: The Best of Aardman Animation (1996)\t67\t4.4478\nShawshank Redemption, The (1994)\t283\t4.4452\nRear Window (1954)\t209\t4.3876\nUsual Suspects, The (1995)\t267\t4.3858\nStar Wars (1977)\t583\t4.3585\n12 Angry Men (1957)\t125\t4.3440\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "name\trating_times\taverage_rating\nClose Shave, A (1995)\t112\t4.4911\nSchindler\u0027s List (1993)\t298\t4.4664\nWrong Trousers, The (1993)\t118\t4.4661\nCasablanca (1942)\t243\t4.4568\nWallace \u0026 Gromit: The Best of Aardman Animation (1996)\t67\t4.4478\nShawshank Redemption, The (1994)\t283\t4.4452\nRear Window (1954)\t209\t4.3876\nUsual Suspects, The (1995)\t267\t4.3858\nStar Wars (1977)\t583\t4.3585\n12 Angry Men (1957)\t125\t4.3440\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493086492438_-83771312",
+      "id": "20170424-221452_1835008990",
+      "dateCreated": "Apr 24, 2017 10:14:52 PM",
+      "dateStarted": "May 2, 2017 5:26:32 PM",
+      "dateFinished": "May 2, 2017 5:26:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark._\nimport org.apache.spark.streaming._\nimport org.apache.spark.streaming.StreamingContext._ \nval dataDir \u003d (\"/Users/kaifeilei/Desktop/rutgers/course/semester_4/movie_recommend/ml-100k/\")\nvar genre \u003d sc.textFile(dataDir+\"u.genre\")\nval genreMap \u003d genre.filter(!_.isEmpty).map(line \u003d\u003e line.\nsplit(\"\\\\|\")).map(array \u003d\u003e (array(1), array(0))).collectAsMap\nprintln(genreMap)\nvar genre_table \u003d movie_data.map(_.split(\"\\\\|\")).map { array \u003d\u003e\nval genres_key \u003d array.toSeq.slice(5,array.size)\nval genresAssigned \u003d genres_key.zipWithIndex.filter { case (g, idx) \u003d\u003e g \u003d\u003d \"1\"}.map { case (g, idx) \u003d\u003e\n(genreMap(idx.toString),1)\n}\n(genresAssigned)\n}\nval genre_draw \u003d genre_table.flatMap(identity).reduceByKey((a, b) \u003d\u003e a + b).collect().map(line \u003d\u003e line._1+\"\\t\"+line._2).toList.mkString(\"\\n\")\nprintln(\"%table genre\\tcount\\n\" + genre_draw)\n\n\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nimport org.apache.spark._\n\nimport org.apache.spark.streaming._\n\nimport org.apache.spark.streaming.StreamingContext._\n\ndataDir: String \u003d /Users/kaifeilei/Desktop/rutgers/course/semester_4/movie_recommend/ml-100k/\n\ngenre: org.apache.spark.rdd.RDD[String] \u003d /Users/kaifeilei/Desktop/rutgers/course/semester_4/movie_recommend/ml-100k/u.genre MapPartitionsRDD[78] at textFile at \u003cconsole\u003e:38\n\ngenreMap: scala.collection.Map[String,String] \u003d Map(2 -\u003e Adventure, 5 -\u003e Comedy, 12 -\u003e Musical, 15 -\u003e Sci-Fi, 8 -\u003e Drama, 18 -\u003e Western, 7 -\u003e Documentary, 17 -\u003e War, 1 -\u003e Action, 4 -\u003e Children\u0027s, 11 -\u003e Horror, 14 -\u003e Romance, 6 -\u003e Crime, 0 -\u003e unknown, 9 -\u003e Fantasy, 16 -\u003e Thriller, 3 -\u003e Animation, 10 -\u003e Film-Noir, 13 -\u003e Mystery)\nMap(2 -\u003e Adventure, 5 -\u003e Comedy, 12 -\u003e Musical, 15 -\u003e Sci-Fi, 8 -\u003e Drama, 18 -\u003e Western, 7 -\u003e Documentary, 17 -\u003e War, 1 -\u003e Action, 4 -\u003e Children\u0027s, 11 -\u003e Horror, 14 -\u003e Romance, 6 -\u003e Crime, 0 -\u003e unknown, 9 -\u003e Fantasy, 16 -\u003e Thriller, 3 -\u003e Animation, 10 -\u003e Film-Noir, 13 -\u003e Mystery)\n\ngenre_table: org.apache.spark.rdd.RDD[Seq[(String, Int)]] \u003d MapPartitionsRDD[83] at map at \u003cconsole\u003e:44\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ngenre_draw: String \u003d\nWar\t71\nFantasy\t22\nWestern\t27\nMusical\t56\nHorror\t92\nCrime\t109\nAnimation\t42\nThriller\t251\nAdventure\t135\nunknown\t2\nAction\t251\nSci-Fi\t101\nComedy\t505\nDocumentary\t50\nMystery\t61\nRomance\t247\nDrama\t725\nChildren\u0027s\t122\nFilm-Noir\t24\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "genre\tcount\nWar\t71\nFantasy\t22\nWestern\t27\nMusical\t56\nHorror\t92\nCrime\t109\nAnimation\t42\nThriller\t251\nAdventure\t135\nunknown\t2\nAction\t251\nSci-Fi\t101\nComedy\t505\nDocumentary\t50\nMystery\t61\nRomance\t247\nDrama\t725\nChildren\u0027s\t122\nFilm-Noir\t24\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492822674488_-1651812614",
+      "id": "20170421-205754_1061793493",
+      "dateCreated": "Apr 21, 2017 8:57:54 PM",
+      "dateStarted": "May 2, 2017 5:07:58 PM",
+      "dateFinished": "May 2, 2017 5:08:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var item \u003d sc.textFile(dataDir+\"u.data\").map(line \u003d\u003e line.split(\"\\\\|\")).map(array \u003d\u003e (array(1).toInt, array(2).toDouble))\nval item_rating_size \u003d item.groupByKey().map(x \u003d\u003e (x._1,x._2.size)).filter{case(k,v) \u003d\u003e v \u003e 50}\nval item_rating_sum \u003d item.reduceByKey(_ + _)\nval item_id_name \u003d movie_data.map(line \u003d\u003e line.split(\"\\\\|\")).map(array \u003d\u003e (array(0).toInt,array(1).toString))\nval joined1 \u003d item_rating_size.join(item_rating_sum).map(line \u003d\u003e line._2,line)\nval joined2 \u003d item_id_name.join(joined1)\nval item_name_aver_size \u003d joined2.map(line\u003d\u003e(line._2._1,line._2._2._2/line._2._2._1,line._2._2._2))\n// item_rating.collect().map(line \u003d\u003e line._1+\"\\t\"+line._2).toList.mkString(\"\\n\")\n// println(\"%table movie\\tcount\\n\" + movie_rating_table)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nitem: org.apache.spark.rdd.RDD[(Int, Double)] \u003d MapPartitionsRDD[89] at map at \u003cconsole\u003e:38\n\nitem_rating_size: org.apache.spark.rdd.RDD[(Int, Int)] \u003d MapPartitionsRDD[92] at filter at \u003cconsole\u003e:40\n\nitem_rating_sum: org.apache.spark.rdd.RDD[(Int, Double)] \u003d ShuffledRDD[93] at reduceByKey at \u003cconsole\u003e:40\n\nitem_id_name: org.apache.spark.rdd.RDD[(Int, String)] \u003d MapPartitionsRDD[95] at map at \u003cconsole\u003e:38\n\n\n\n\u003cconsole\u003e:44: error: too many arguments for method map: (f: ((Int, (Int, Double))) \u003d\u003e U)(implicit evidence$3: scala.reflect.ClassTag[U])org.apache.spark.rdd.RDD[U]\n       val joined1 \u003d item_rating_size.join(item_rating_sum).map(line \u003d\u003e line._2,line)\n                                                               ^\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1492826044682_-1674136272",
+      "id": "20170421-215404_1125851596",
+      "dateCreated": "Apr 21, 2017 9:54:04 PM",
+      "dateStarted": "May 2, 2017 5:08:01 PM",
+      "dateFinished": "May 2, 2017 5:08:07 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val age_user \u003d user_fields.map(array \u003d\u003e (array(0),array(1))).sortBy(_._2,true)\ncase class Age(id : Int, age: Int)\nval age_user_df \u003d age_user.map(array \u003d\u003e Age(array._1.toInt,array._2.toInt)).toDF()\n\nval range \u003d Map(0 -\u003e9,10 -\u003e 19, 20 -\u003e 29,30 -\u003e 39,40 -\u003e 49,50 -\u003e 59,60 -\u003e 69,70 -\u003e 79)\nval result_map  \u003d scala.collection.mutable.Map[String,Long]()\nfor((k,v) \u003c- range.par){\n    val count \u003d age_user_df.filter($\"age\"\u003e\u003d k and $\"age\" \u003c\u003d v).count();\n    val key \u003d k + \"~\" + v;\n    result_map +\u003d (key -\u003e count)\n}\nval age_period_table \u003d result_map.toSeq.sortBy(_._1).map(line \u003d\u003e (line._1 + \"\\t\" + line._2)).toList.mkString(\"\\n\")\nprint(\"%table age_period\\tcount\\n\" + age_period_table)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 6:06:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "age_period",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nage_user: org.apache.spark.rdd.RDD[(String, String)] \u003d MapPartitionsRDD[703] at sortBy at \u003cconsole\u003e:40\n\ndefined class Age\n\nage_user_df: org.apache.spark.sql.DataFrame \u003d [id: int, age: int]\n\nrange: scala.collection.immutable.Map[Int,Int] \u003d Map(0 -\u003e 9, 10 -\u003e 19, 20 -\u003e 29, 60 -\u003e 69, 70 -\u003e 79, 50 -\u003e 59, 40 -\u003e 49, 30 -\u003e 39)\n\nresult_map: scala.collection.mutable.Map[String,Long] \u003d Map()\n\n\n\n\n\n\n\n\n\nage_period_table: String \u003d\n0~9\t1\n10~19\t76\n20~29\t332\n30~39\t241\n40~49\t168\n50~59\t94\n60~69\t27\n70~79\t4\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "age_period\tcount\n0~9\t1\n10~19\t76\n20~29\t332\n30~39\t241\n40~49\t168\n50~59\t94\n60~69\t27\n70~79\t4"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493087772033_-1696618443",
+      "id": "20170424-223612_1784607826",
+      "dateCreated": "Apr 24, 2017 10:36:12 PM",
+      "dateStarted": "May 2, 2017 5:56:08 PM",
+      "dateFinished": "May 2, 2017 5:56:11 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val user_rate \u003d rating_data.map(array \u003d\u003e (array(0),array(2).toDouble))\nval user_rate_size \u003d user_rate.groupByKey().map(line \u003d\u003e (line._1,line._2.size))\nval user_rate_sum \u003d user_rate.reduceByKey((a,b)\u003d\u003e(a+b))\nval user_rate_aver \u003d user_rate_sum.join(user_rate_size).map(line \u003d\u003e (line._1,(line._2._1/line._2._2).formatted(\"%.4f\").toDouble)).filter(line \u003d\u003e (line._2 \u003e 0))\nvar age_user_rate \u003d user_rate_aver.join(age_user).map(line \u003d\u003e (line._1,line._2._2,line._2._1))\nage_user_rate.first\nval age_rating  \u003d scala.collection.mutable.Map[String,Double]()\ncase class rate(id : Int, age:Int,rating: Double)\nval age_user_rate_df \u003d age_user_rate.map(array \u003d\u003e rate(array._1.toInt,array._2.toInt,array._3)).toDF()\n\nfor((k,v) \u003c- range.par){\n    // val count \u003d age_user_rate_df.filter($\"age\"\u003e k and $\"age\" \u003c\u003d v).count();\n    val key \u003d k + \"~\" + v;\n    val aver \u003d age_user_rate_df.filter($\"age\"\u003e\u003d k and $\"age\" \u003c\u003d v).select(avg($\"rating\")).first().getDouble(0).formatted(\"%.4f\").toDouble\n  \n    age_rating +\u003d (key -\u003e aver)\n}\nval age_aver_table \u003d age_rating.toSeq.sortBy(_._1).map(line \u003d\u003e (line._1 + \"\\t\" + line._2)).toList.mkString(\"\\n\")\nprint(\"%table age_period\\taverage\\n\" + age_aver_table)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nuser_rate: org.apache.spark.rdd.RDD[(String, Double)] \u003d MapPartitionsRDD[151] at map at \u003cconsole\u003e:40\n\nuser_rate_size: org.apache.spark.rdd.RDD[(String, Int)] \u003d MapPartitionsRDD[153] at map at \u003cconsole\u003e:42\n\nuser_rate_sum: org.apache.spark.rdd.RDD[(String, Double)] \u003d ShuffledRDD[154] at reduceByKey at \u003cconsole\u003e:42\n\nuser_rate_aver: org.apache.spark.rdd.RDD[(String, Double)] \u003d MapPartitionsRDD[159] at filter at \u003cconsole\u003e:46\n\nage_user_rate: org.apache.spark.rdd.RDD[(String, String, Double)] \u003d MapPartitionsRDD[163] at map at \u003cconsole\u003e:54\n\nres18: (String, String, Double) \u003d (273,50,3.6364)\n\nage_rating: scala.collection.mutable.Map[String,Double] \u003d Map()\n\ndefined class rate\n\nage_user_rate_df: org.apache.spark.sql.DataFrame \u003d [id: int, age: int ... 1 more field]\n\n\n\n\n\n\n\n\n\nage_aver_table: String \u003d\n0~9\t3.7674\n10~19\t3.4788\n20~29\t3.5677\n30~39\t3.5866\n40~49\t3.6061\n50~59\t3.7124\n60~69\t3.5972\n70~79\t3.6862\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "age_period\taverage\n0~9\t3.7674\n10~19\t3.4788\n20~29\t3.5677\n30~39\t3.5866\n40~49\t3.6061\n50~59\t3.7124\n60~69\t3.5972\n70~79\t3.6862"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493089849753_-142724611",
+      "id": "20170424-231049_43617937",
+      "dateCreated": "Apr 24, 2017 11:10:49 PM",
+      "dateStarted": "May 2, 2017 5:08:07 PM",
+      "dateFinished": "May 2, 2017 5:08:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val movie_rate_1 \u003d rating_data.map(array \u003d\u003e (array(0),array(1),array(2).toDouble)).filter(line \u003d\u003e (line._2 \u003d\u003d \"1\")).map(line \u003d\u003e (line._1,line._3))\n\nval user_age_rate_1 \u003d movie_rate_1.join(age_user).map(line \u003d\u003e (line._1,line._2._2,line._2._1))\n\nval age_rating_1  \u003d scala.collection.mutable.Map[String,Double]()\ncase class rate1(id : Int, age:Int,rating: Double)\nval age_user_rate_df_1 \u003d user_age_rate_1.map(array \u003d\u003e rate1(array._1.toInt,array._2.toInt,array._3)).toDF()\nfor((k,v) \u003c- range.par){\n   \n    val key_1 \u003d k + \"~\" + v;\n    val period_1 \u003d age_user_rate_df_1.filter($\"age\"\u003e\u003d k and $\"age\" \u003c\u003d v)\n    val aver_1 \u003d if(period_1.count \u003d\u003d 0) 0.0 else period_1.select(avg($\"rating\")).first().getDouble(0).formatted(\"%.4f\").toDouble\n \n    age_rating_1 +\u003d (key_1 -\u003e aver_1)\n}\n\nval age_aver_table_1\u003d age_rating_1.toSeq.sortBy(_._1).map(line \u003d\u003e (line._1 + \"\\t\" + line._2)).toList.mkString(\"\\n\")\nprint(\"%table age_period\\taverage\\n\" + age_aver_table_1)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nmovie_rate_1: org.apache.spark.rdd.RDD[(String, Double)] \u003d MapPartitionsRDD[215] at map at \u003cconsole\u003e:40\n\nuser_age_rate_1: org.apache.spark.rdd.RDD[(String, String, Double)] \u003d MapPartitionsRDD[219] at map at \u003cconsole\u003e:48\n\nage_rating_1: scala.collection.mutable.Map[String,Double] \u003d Map()\n\ndefined class rate1\n\nage_user_rate_df_1: org.apache.spark.sql.DataFrame \u003d [id: int, age: int ... 1 more field]\n\n\n\n\n\n\n\n\n\nage_aver_table_1: String \u003d\n0~9\t0.0\n10~19\t3.6216\n20~29\t3.9206\n30~39\t4.0331\n40~49\t3.7\n50~59\t3.7586\n60~69\t3.4\n70~79\t5.0\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "age_period\taverage\n0~9\t0.0\n10~19\t3.6216\n20~29\t3.9206\n30~39\t4.0331\n40~49\t3.7\n50~59\t3.7586\n60~69\t3.4\n70~79\t5.0"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493157690424_1717154199",
+      "id": "20170425-180130_406103183",
+      "dateCreated": "Apr 25, 2017 6:01:30 PM",
+      "dateStarted": "May 2, 2017 5:08:13 PM",
+      "dateFinished": "May 2, 2017 5:08:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val movie_rate_50 \u003d rating_data.map(array \u003d\u003e (array(0),array(1),array(2).toDouble)).filter(line \u003d\u003e (line._2 \u003d\u003d \"50\")).map(line \u003d\u003e (line._1,line._3))\n\nval user_age_rate_50 \u003d movie_rate_50.join(age_user).map(line \u003d\u003e (line._1,line._2._2,line._2._1))\n\nval age_rating_50  \u003d scala.collection.mutable.Map[String,Double]()\ncase class rate50(id : Int, age:Int,rating: Double)\nval age_user_rate_df_50 \u003d user_age_rate_50.map(array \u003d\u003e rate50(array._1.toInt,array._2.toInt,array._3)).toDF()\n\nfor((k,v) \u003c- range.par){\n   \n    val key_50 \u003d k + \"~\" + v;\n    val period_50 \u003d age_user_rate_df_50.filter($\"age\"\u003e\u003d k and $\"age\" \u003c\u003d v)\n    val aver_50 \u003d if(period_50.count \u003d\u003d 0) 0.0 else period_50.select(avg($\"rating\")).first().getDouble(0).formatted(\"%.4f\").toDouble\n \n    age_rating_50 +\u003d (key_50 -\u003e aver_50)\n}\n\nval age_aver_table_50\u003d age_rating_50.toSeq.sortBy(_._1).map(line \u003d\u003e (line._1 + \"\\t\" + line._2)).toList.mkString(\"\\n\")\nprint(\"%table age_period\\taverage\\n\" + age_aver_table_50)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nmovie_rate_50: org.apache.spark.rdd.RDD[(String, Double)] \u003d MapPartitionsRDD[313] at map at \u003cconsole\u003e:40\n\nuser_age_rate_50: org.apache.spark.rdd.RDD[(String, String, Double)] \u003d MapPartitionsRDD[317] at map at \u003cconsole\u003e:48\n\nage_rating_50: scala.collection.mutable.Map[String,Double] \u003d Map()\n\ndefined class rate50\n\nage_user_rate_df_50: org.apache.spark.sql.DataFrame \u003d [id: int, age: int ... 1 more field]\n\n\n\n\n\n\n\n\n\nage_aver_table_50: String \u003d\n0~9\t3.0\n10~19\t4.6304\n20~29\t4.413\n30~39\t4.3057\n40~49\t4.1667\n50~59\t4.4694\n60~69\t4.0\n70~79\t4.0\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "age_period\taverage\n0~9\t3.0\n10~19\t4.6304\n20~29\t4.413\n30~39\t4.3057\n40~49\t4.1667\n50~59\t4.4694\n60~69\t4.0\n70~79\t4.0"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493168011360_1894091002",
+      "id": "20170425-205331_1994138045",
+      "dateCreated": "Apr 25, 2017 8:53:31 PM",
+      "dateStarted": "May 2, 2017 5:08:17 PM",
+      "dateFinished": "May 2, 2017 5:08:22 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val movie_rate_127 \u003d rating_data.map(array \u003d\u003e (array(0),array(1),array(2).toDouble)).filter(line \u003d\u003e (line._2 \u003d\u003d \"127\")).map(line \u003d\u003e (line._1,line._3))\n\nval user_age_rate_127 \u003d movie_rate_127.join(age_user).map(line \u003d\u003e (line._1,line._2._2,line._2._1))\n\nval age_rating_127  \u003d scala.collection.mutable.Map[String,Double]()\ncase class rate127(id : Int, age:Int,rating: Double)\nval age_user_rate_df_127 \u003d user_age_rate_127.map(array \u003d\u003e rate127(array._1.toInt,array._2.toInt,array._3)).toDF()\n\nfor((k,v) \u003c- range.par){\n   \n    val key_127 \u003d k + \"~\" + v;\n    val period_127 \u003d age_user_rate_df_127.filter($\"age\"\u003e\u003d k and $\"age\" \u003c\u003d v)\n    val aver_127 \u003d if(period_127.count \u003d\u003d 0) 0.0 else period_127.select(avg($\"rating\")).first().getDouble(0).formatted(\"%.4f\").toDouble\n \n    age_rating_127 +\u003d (key_127 -\u003e aver_127)\n}\n\nval age_aver_table_127\u003d age_rating_127.toSeq.sortBy(_._1).map(line \u003d\u003e (line._1 + \"\\t\" + line._2)).toList.mkString(\"\\n\")\nprint(\"%table age_period\\taverage\\n\" + age_aver_table_127)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nmovie_rate_127: org.apache.spark.rdd.RDD[(String, Double)] \u003d MapPartitionsRDD[417] at map at \u003cconsole\u003e:40\n\nuser_age_rate_127: org.apache.spark.rdd.RDD[(String, String, Double)] \u003d MapPartitionsRDD[421] at map at \u003cconsole\u003e:48\n\nage_rating_127: scala.collection.mutable.Map[String,Double] \u003d Map()\n\ndefined class rate127\n\nage_user_rate_df_127: org.apache.spark.sql.DataFrame \u003d [id: int, age: int ... 1 more field]\n\n\n\n\n\n\n\n\n\nage_aver_table_127: String \u003d\n0~9\t0.0\n10~19\t4.4\n20~29\t4.3451\n30~39\t4.4128\n40~49\t3.9294\n50~59\t4.4634\n60~69\t4.125\n70~79\t0.0\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "age_period\taverage\n0~9\t0.0\n10~19\t4.4\n20~29\t4.3451\n30~39\t4.4128\n40~49\t3.9294\n50~59\t4.4634\n60~69\t4.125\n70~79\t0.0"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493173390409_-2101203241",
+      "id": "20170425-222310_482252635",
+      "dateCreated": "Apr 25, 2017 10:23:10 PM",
+      "dateStarted": "May 2, 2017 5:08:20 PM",
+      "dateFinished": "May 2, 2017 5:08:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val movie_rate_313 \u003d rating_data.map(array \u003d\u003e (array(0),array(1),array(2).toDouble)).filter(line \u003d\u003e (line._2 \u003d\u003d \"313\")).map(line \u003d\u003e (line._1,line._3))\n\nval user_age_rate_313 \u003d movie_rate_313.join(age_user).map(line \u003d\u003e (line._1,line._2._2,line._2._1))\nval age_rating_313  \u003d scala.collection.mutable.Map[String,Double]()\ncase class rate313(id : Int, age:Int,rating: Double)\nval age_user_rate_df_313 \u003d user_age_rate_313.map(array \u003d\u003e rate127(array._1.toInt,array._2.toInt,array._3)).toDF()\n\nfor((k,v) \u003c- range.par){\n   \n    val key_313 \u003d k + \"~\" + v;\n    val period_313 \u003d age_user_rate_df_313.filter($\"age\"\u003e\u003d k and $\"age\" \u003c\u003d v)\n    val aver_313 \u003d if(period_313.count \u003d\u003d 0) 0.0 else period_313.select(avg($\"rating\")).first().getDouble(0).formatted(\"%.4f\").toDouble\n \n    age_rating_313 +\u003d (key_313 -\u003e aver_313)\n}\n\nval age_aver_table_313\u003d age_rating_313.toSeq.sortBy(_._1).map(line \u003d\u003e (line._1 + \"\\t\" + line._2)).toList.mkString(\"\\n\")\nprint(\"%table age_period\\taverage\\n\" + age_aver_table_313)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nmovie_rate_313: org.apache.spark.rdd.RDD[(String, Double)] \u003d MapPartitionsRDD[509] at map at \u003cconsole\u003e:40\n\nuser_age_rate_313: org.apache.spark.rdd.RDD[(String, String, Double)] \u003d MapPartitionsRDD[513] at map at \u003cconsole\u003e:48\n\nage_rating_313: scala.collection.mutable.Map[String,Double] \u003d Map()\n\ndefined class rate313\n\nage_user_rate_df_313: org.apache.spark.sql.DataFrame \u003d [id: int, age: int ... 1 more field]\n\n\n\n\n\n\n\n\n\nage_aver_table_313: String \u003d\n0~9\t5.0\n10~19\t4.6111\n20~29\t4.3361\n30~39\t4.2361\n40~49\t3.9848\n50~59\t4.2105\n60~69\t3.8462\n70~79\t4.0\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "age_period\taverage\n0~9\t5.0\n10~19\t4.6111\n20~29\t4.3361\n30~39\t4.2361\n40~49\t3.9848\n50~59\t4.2105\n60~69\t3.8462\n70~79\t4.0"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493173671215_-2102158274",
+      "id": "20170425-222751_271927454",
+      "dateCreated": "Apr 25, 2017 10:27:51 PM",
+      "dateStarted": "May 2, 2017 5:08:23 PM",
+      "dateFinished": "May 2, 2017 5:08:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val age_1 \u003d user_fields.map(fields \u003d\u003e (fields(0),fields(1).toInt)).filter(line \u003d\u003e (line._2 \u003c\u003d 9))\nval id_30 \u003d rating_data.map(array \u003d\u003e (array(0),array(1))).filter(line \u003d\u003e (line._1 \u003d\u003d \"30\")).toDF().show\n",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nage_1: org.apache.spark.rdd.RDD[(String, Int)] \u003d MapPartitionsRDD[612] at filter at \u003cconsole\u003e:40\n+---+----+\n| _1|  _2|\n+---+----+\n| 30| 539|\n| 30| 435|\n| 30|  82|\n| 30| 181|\n| 30| 289|\n| 30| 678|\n| 30|1007|\n| 30| 255|\n| 30| 286|\n| 30| 688|\n| 30|  28|\n| 30| 294|\n| 30| 538|\n| 30| 531|\n| 30| 301|\n| 30| 231|\n| 30|   7|\n| 30|1013|\n| 30| 242|\n| 30| 258|\n+---+----+\nonly showing top 20 rows\n\n\nid_30: Unit \u003d ()\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493173804913_1803594733",
+      "id": "20170425-223004_610627663",
+      "dateCreated": "Apr 25, 2017 10:30:04 PM",
+      "dateStarted": "May 2, 2017 5:08:25 PM",
+      "dateFinished": "May 2, 2017 5:08:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val id_movie \u003d rating_data.map(fields \u003d\u003e (fields(0).toInt,fields(1).toInt))\nval id_rate \u003d rating_data.map(fields \u003d\u003e (fields(0).toInt,fields(2).toDouble))\nval id_gender \u003d user_fields.map(array \u003d\u003e (array(0).toInt,array(2)))\nval id_mrg \u003d id_movie.join(id_gender).join(id_rate).map(line \u003d\u003e (line._1,line._2._1._1,line._2._1._2,line._2._2))\n//female\nval id_mrg_f \u003d id_mrg.filter(line \u003d\u003e (line._3 \u003d\u003d \"F\")).map(array \u003d\u003e (array._2,array._4))\nval id_mrg_f_size \u003d id_mrg_f.groupByKey().map(line\u003d\u003e(line._1,line._2.size))\nval id_mrg_f_sum \u003d id_mrg_f.reduceByKey(_+_)\nval id_mrg_f_avg \u003d id_mrg_f_size.join(id_mrg_f_sum).map(line\u003d\u003e(line._1,(line._2._2/line._2._1).formatted(\"%.4f\").toDouble))\n//male\nval id_mrg_m \u003d id_mrg.filter(line \u003d\u003e (line._3 \u003d\u003d \"M\")).map(array \u003d\u003e (array._2,array._4))\nval id_mrg_m_size \u003d id_mrg_m.groupByKey().map(line\u003d\u003e(line._1,line._2.size))\nval id_mrg_m_sum \u003d id_mrg_m.reduceByKey(_+_)\nval id_mrg_m_avg \u003d id_mrg_m_size.join(id_mrg_m_sum).map(line\u003d\u003e(line._1,(line._2._2/line._2._1).formatted(\"%.4f\").toDouble))\n//male and female :id\nval total_id \u003d id_mrg_f_avg.join(id_mrg_m_avg)\n// .map(line\u003d\u003e(line._1, line._2._1, line._2._2,Math.abs(line._2._1-line._2._2)))\nval total_name \u003d movie_name.join(total_id).map(line\u003d\u003e(line._2._1, line._2._2._1, line._2._2._2,Math.abs(line._2._2._1-line._2._2._2).formatted(\"%.4f\").toDouble)).sortBy(_._4,false)\n",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nid_movie: org.apache.spark.rdd.RDD[(Int, Int)] \u003d MapPartitionsRDD[618] at map at \u003cconsole\u003e:40\n\nid_rate: org.apache.spark.rdd.RDD[(Int, Double)] \u003d MapPartitionsRDD[619] at map at \u003cconsole\u003e:40\n\nid_gender: org.apache.spark.rdd.RDD[(Int, String)] \u003d MapPartitionsRDD[620] at map at \u003cconsole\u003e:40\n\nid_mrg: org.apache.spark.rdd.RDD[(Int, Int, String, Double)] \u003d MapPartitionsRDD[627] at map at \u003cconsole\u003e:50\n\nid_mrg_f: org.apache.spark.rdd.RDD[(Int, Double)] \u003d MapPartitionsRDD[629] at map at \u003cconsole\u003e:52\n\nid_mrg_f_size: org.apache.spark.rdd.RDD[(Int, Int)] \u003d MapPartitionsRDD[631] at map at \u003cconsole\u003e:54\n\nid_mrg_f_sum: org.apache.spark.rdd.RDD[(Int, Double)] \u003d ShuffledRDD[632] at reduceByKey at \u003cconsole\u003e:54\n\nid_mrg_f_avg: org.apache.spark.rdd.RDD[(Int, Double)] \u003d MapPartitionsRDD[636] at map at \u003cconsole\u003e:58\n\nid_mrg_m: org.apache.spark.rdd.RDD[(Int, Double)] \u003d MapPartitionsRDD[638] at map at \u003cconsole\u003e:52\n\nid_mrg_m_size: org.apache.spark.rdd.RDD[(Int, Int)] \u003d MapPartitionsRDD[640] at map at \u003cconsole\u003e:54\n\nid_mrg_m_sum: org.apache.spark.rdd.RDD[(Int, Double)] \u003d ShuffledRDD[641] at reduceByKey at \u003cconsole\u003e:54\n\nid_mrg_m_avg: org.apache.spark.rdd.RDD[(Int, Double)] \u003d MapPartitionsRDD[645] at map at \u003cconsole\u003e:58\n\ntotal_id: org.apache.spark.rdd.RDD[(Int, (Double, Double))] \u003d MapPartitionsRDD[648] at join at \u003cconsole\u003e:68\n\ntotal_name: org.apache.spark.rdd.RDD[(String, Double, Double, Double)] \u003d MapPartitionsRDD[657] at sortBy at \u003cconsole\u003e:74\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493174084693_902911237",
+      "id": "20170425-223444_1953856887",
+      "dateCreated": "Apr 25, 2017 10:34:44 PM",
+      "dateStarted": "May 2, 2017 5:08:28 PM",
+      "dateFinished": "May 2, 2017 5:08:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val total_name_table \u003d total_name.map(line \u003d\u003e (line._1 + \"\\t\" + line._2 + \"\\t\" + line._3+ \"\\t\" + line._4)).collect.take(5).toList.mkString(\"\\n\")\nprint(\"%table movie\\taverage_female\\taverage_male\\tdifference\\n\" +  total_name_table)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 6:01:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\n\n\n\n\n\ntotal_name_table: String \u003d\nFor the Moment (1994)\t3.8936\t1.622\t2.2716\nSpirits of the Dead (Tre passi nel delirio) (1968)\t1.8345\t3.9668\t2.1323\nThe Innocent (1994)\t1.8724\t3.9395\t2.0671\nBoys (1996)\t4.4194\t2.4064\t2.013\nTotal Eclipse (1995)\t1.8345\t3.793\t1.9585\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "movie\taverage_female\taverage_male\tdifference\nFor the Moment (1994)\t3.8936\t1.622\t2.2716\nSpirits of the Dead (Tre passi nel delirio) (1968)\t1.8345\t3.9668\t2.1323\nThe Innocent (1994)\t1.8724\t3.9395\t2.0671\nBoys (1996)\t4.4194\t2.4064\t2.013\nTotal Eclipse (1995)\t1.8345\t3.793\t1.9585"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1493175236436_-1326296007",
+      "id": "20170425-225356_726393478",
+      "dateCreated": "Apr 25, 2017 10:53:56 PM",
+      "dateStarted": "May 2, 2017 5:08:28 PM",
+      "dateFinished": "May 2, 2017 5:08:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2017 5:07:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1493177298532_-1931749045",
+      "id": "20170425-232818_1182610782",
+      "dateCreated": "Apr 25, 2017 11:28:18 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "movie_recommend",
+  "id": "2CGUGP3S8",
+  "angularObjects": {
+    "2CGYMPV9B:shared_process": [],
+    "2CFRPGCHN:shared_process": [],
+    "2CE9GU33V:shared_process": [],
+    "2CEGNC3DZ:shared_process": [],
+    "2CFHVBMDY:shared_process": [],
+    "2CERD25B7:shared_process": [],
+    "2CH3W9GJB:shared_process": [],
+    "2CFTC543P:shared_process": [],
+    "2CG93Y4UF:shared_process": [],
+    "2CGXVZYV8:shared_process": [],
+    "2CDNX36S4:shared_process": [],
+    "2CDQTFG3N:shared_process": [],
+    "2CH9UB7CN:shared_process": [],
+    "2CDJKC36N:shared_process": [],
+    "2CHA47X71:shared_process": [],
+    "2CDYD5T33:shared_process": [],
+    "2CE8MTGA2:shared_process": [],
+    "2CDBYMTRY:shared_process": [],
+    "2CE1RS4ZS:shared_process": []
+  },
+  "config": {
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}
